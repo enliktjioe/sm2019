@@ -1,14 +1,15 @@
-package EnrollmentManager;
+package BankSystem;
+
 import java.util.List;
 
 public class Controller {
 
-	public static boolean createCourse(String courseTitle) {
-		boolean exists = CourseDAO.courseWithTitleExists(courseTitle);
+	public static boolean createConsultant(String consultantName) {
+		boolean exists = ConsultantDAO.consultantWithNameExist(consultantName);
 		if(!exists){
-			Course course = new Course();
-			course.setTitle(courseTitle);
-			CourseDAO.insertCourse(course);	 
+			Consultant consultant = new Consultant();
+			consultant.setName(consultantName);
+			ConsultantDAO.insertConsultant(consultant);
 		}
 		return exists;
 	}
@@ -18,26 +19,26 @@ public class Controller {
 		if(!exists){
 			Student student = new Student();
 			student.setID(studentID);
-			StudentDAO.insertStudent(student);	 
+			StudentDAO.insertStudent(student);
 		}
 		return exists;
 	}
 
 	public static int enrollStudent(String studentID, String courseTitle) {
-		
+
 		boolean studentExists = StudentDAO.studentWithIDExists(studentID);
 		if(!studentExists)
 			return -1;
-		
-		boolean courseExists = CourseDAO.courseWithTitleExists(courseTitle);
+
+		boolean courseExists = ConsultantDAO.consultantWithNameExist(courseTitle);
 		if(!courseExists)
 			return -2;
-		
+
 		boolean enrollmentExists = EnrollmentDAO.enrollmentExists(studentID, courseTitle);
 		if(enrollmentExists)
 			return -3;
-		
-		EnrollmentDAO.insertEnrollment(studentID, courseTitle);		
+
+		EnrollmentDAO.insertEnrollment(studentID, courseTitle);
 		
 		return 0;
 	

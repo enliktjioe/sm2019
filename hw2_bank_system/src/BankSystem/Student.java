@@ -1,4 +1,4 @@
-package EnrollmentManager;
+package BankSystem;
 
 public class Student {
 

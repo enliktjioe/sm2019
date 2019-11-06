@@ -1,4 +1,4 @@
-package EnrollmentManager;
+package BankSystem;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,7 +15,7 @@ public class StudentDAO {
 		try {
 			Class.forName("org.hsqldb.jdbc.JDBCDriver");
 			con = DriverManager.getConnection(
-					"jdbc:hsqldb:hsql://localhost/universitydb", "SA", "");
+					"jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement();
 			result = stmt.executeQuery(
 					"SELECT * FROM student WHERE studentID = '"+studentID+"'");
@@ -35,7 +35,7 @@ public class StudentDAO {
 		int result = 0; 
 		try { 
 			Class.forName("org.hsqldb.jdbc.JDBCDriver"); 
-			con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/universitydb", "SA", ""); 
+			con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement(); 
 			result = stmt.executeUpdate("INSERT INTO student VALUES ('"+student.getID()+"')"); 
 			con.commit();

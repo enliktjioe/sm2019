@@ -1,13 +1,13 @@
-package EnrollmentManager;
+package BankSystem;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class CourseDAO {
+public class ConsultantDAO {
 
-	public static boolean courseWithTitleExists(String title){
+	public static boolean consultantWithNameExist(String consultantName){
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet result = null;
@@ -15,10 +15,10 @@ public class CourseDAO {
 		try {
 			Class.forName("org.hsqldb.jdbc.JDBCDriver");
 			con = DriverManager.getConnection(
-					"jdbc:hsqldb:hsql://localhost/universitydb", "SA", "");
+					"jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement();
 			result = stmt.executeQuery(
-					"SELECT * FROM course WHERE title = '"+title+"'");
+					"SELECT * FROM consultant WHERE consultantName = '"+consultantName+"'");
 			while(result.next()){
 				output= true;
 			}
@@ -29,15 +29,15 @@ public class CourseDAO {
 	}
 
 
-	public static boolean insertCourse(Course course){
+	public static boolean insertConsultant(Consultant consultant){
 		Connection con = null; 
 		Statement stmt = null; 
 		int result = 0; 
 		try { 
 			Class.forName("org.hsqldb.jdbc.JDBCDriver"); 
-			con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/universitydb", "SA", ""); 
+			con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement(); 
-			result = stmt.executeUpdate("INSERT INTO course VALUES ('"+course.getTitle()+"')"); 
+			result = stmt.executeUpdate("INSERT INTO consultant VALUES ('"+ consultant.getName()+"')");
 			con.commit();
 		}catch (Exception e) { 
 			e.printStackTrace(System.out); 
