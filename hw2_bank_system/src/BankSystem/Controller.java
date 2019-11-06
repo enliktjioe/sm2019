@@ -14,6 +14,16 @@ public class Controller {
 		return exists;
 	}
 
+	public static boolean createCustomer(String customerName, String DOB, int age) {
+		boolean exists = CustomerFolderDAO.customerWithNameExist(customerName);
+		if(!exists){
+			CustomerFolder customerFolder = new CustomerFolder();
+			customerFolder.setName(customerName);
+			CustomerFolderDAO.insertCustomer(customerFolder, DOB, age);
+		}
+		return exists;
+	}
+
 	public static boolean registerStudent(String studentID) {
 		boolean exists = StudentDAO.studentWithIDExists(studentID);
 		if(!exists){

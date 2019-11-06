@@ -33,7 +33,6 @@ public class Boundary {
 				System.out.println("Pick one option:");
 				System.out.println("1. Enter Junior Consultant");
 				System.out.println("2. Enter Senior Consultant");
-				System.out.println("3. Back");
 				int menuOption = Integer.valueOf(scan.nextLine());
 				switch (menuOption){
 					case 1:
@@ -42,12 +41,10 @@ public class Boundary {
 					case 2:
 						consultantType = consultantEnum.SENIOR.name();
 						break;
-					case 3:
-						break;
 					default:
 						break;
 				}
-
+				System.out.println("Enter Consultant Name:");
 				boolean consultantExists = Controller.createConsultant(consultantType.concat(" " + scan.nextLine()));
 				if(!consultantExists)
 					System.out.println("New Consultant created!");
@@ -55,7 +52,17 @@ public class Boundary {
 					System.out.println("Consultant name already exists!");
 				break;
 			case 2:
-
+				System.out.println("1. Enter Customer Name:");
+				String customerName = String.valueOf(scan.nextLine());
+				System.out.println("2. Enter Customer Date of Birth");
+				String customerDOB = String.valueOf(scan.nextLine());
+				System.out.println("3. Enter Age"); //TODO remove this
+				int customerAge = Integer.valueOf(scan.nextLine());
+				boolean customerExists = Controller.createCustomer(customerName, customerDOB, customerAge);
+				if(!customerExists)
+					System.out.println("New Customer created!");
+				else
+					System.out.println("Customer name already exists!");
 				break;
 			case 3:
 
