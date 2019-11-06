@@ -1,5 +1,6 @@
 package BankSystem;
 
+import javax.naming.ldap.Control;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,11 +22,10 @@ public class Boundary {
 		while(true){
 			System.out.println("Select an option:");
 			System.out.println("1. Enter Consultant");
-			System.out.println("2. Open Customer Folder");
-			System.out.println("3. Assign Senior Consultant");
-			System.out.println("4. See List of Consultant");
-			System.out.println("5. See Content of Customer Folder");
-			System.out.println("6. Exit");
+			System.out.println("2. Open Customer Folder and Assign Senior Consultant");
+			System.out.println("3. See List of Consultant");
+			System.out.println("4. See Content of Customer Folder");
+			System.out.println("5. Exit");
 			int choice = Integer.valueOf(scan.nextLine());
 			switch (choice){
 			case 1:
@@ -54,18 +54,30 @@ public class Boundary {
 			case 2:
 				System.out.println("1. Enter Customer Name:");
 				String customerName = String.valueOf(scan.nextLine());
-				System.out.println("2. Enter Customer Date of Birth");
-				String customerDOB = String.valueOf(scan.nextLine());
-				System.out.println("3. Enter Age"); //TODO remove this
-				int customerAge = Integer.valueOf(scan.nextLine());
-				boolean customerExists = Controller.createCustomer(customerName, customerDOB, customerAge);
-				if(!customerExists)
-					System.out.println("New Customer created!");
-				else
+
+				boolean customerExists = Controller.isCustomerExist(customerName);
+				if(!customerExists) {
+					System.out.println("2. Enter Customer Date of Birth:");
+					String customerDOB = String.valueOf(scan.nextLine());
+					System.out.println("3. Enter Age:"); //TODO remove this and make a logic for set 'age' value based on DOB
+					int customerAge = Integer.valueOf(scan.nextLine());
+					System.out.println("4. Enter Senior Consultant Name:");
+					String consultantName = String.valueOf(scan.nextLine());
+					boolean scExists = Controller.isSeniorConsultantExist(consultantName);
+					if (!scExists) {
+						Controller.createConsultant("SENIOR " + consultantName);
+						System.out.println("New Senior Consultant created!");
+					} else {
+						Controller.createCustomer(customerName, customerDOB, customerAge, consultantName);
+						System.out.println("New Customer Folder created!");
+					}
+				}
+				else {
 					System.out.println("Customer name already exists!");
+				}
+
 				break;
 			case 3:
-
 				break;
 			case 4:
 				break;

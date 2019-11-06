@@ -29,7 +29,7 @@ public class CustomerFolderDAO {
     }
 
 
-    public static boolean insertCustomer(CustomerFolder customer, String DOB, int age){
+    public static boolean insertCustomer(CustomerFolder customer, String DOB, int age, String consultantName){
         Connection con = null;
         Statement stmt = null;
         int result = 0;
@@ -37,7 +37,7 @@ public class CustomerFolderDAO {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
             con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
             stmt = con.createStatement();
-            result = stmt.executeUpdate("INSERT INTO customerFolder VALUES ('"+ customer.getName()+"', '"+DOB+"', '"+age+"')");
+            result = stmt.executeUpdate("INSERT INTO customerFolder VALUES ('"+ customer.getName()+"', '"+DOB+"', '"+age+"', '"+consultantName+"')");
             con.commit();
         }catch (Exception e) {
             e.printStackTrace(System.out);

@@ -14,14 +14,22 @@ public class Controller {
 		return exists;
 	}
 
-	public static boolean createCustomer(String customerName, String DOB, int age) {
-		boolean exists = CustomerFolderDAO.customerWithNameExist(customerName);
-		if(!exists){
-			CustomerFolder customerFolder = new CustomerFolder();
-			customerFolder.setName(customerName);
-			CustomerFolderDAO.insertCustomer(customerFolder, DOB, age);
-		}
+
+	public static boolean isSeniorConsultantExist(String customerName) {
+		boolean exists = ConsultantDAO.consultantWithNameExist("SENIOR " + customerName);
 		return exists;
+	}
+
+	public static boolean isCustomerExist(String customerName) {
+		boolean exists = CustomerFolderDAO.customerWithNameExist(customerName);
+		return exists;
+	}
+
+	public static void createCustomer(String customerName, String DOB, int age, String consultantName) {
+		CustomerFolder customerFolder = new CustomerFolder();
+		customerFolder.setName(customerName);
+		CustomerFolderDAO.insertCustomer(customerFolder, DOB, age, consultantName);
+		return;
 	}
 
 	public static boolean registerStudent(String studentID) {
