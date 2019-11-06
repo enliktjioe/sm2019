@@ -70,4 +70,8 @@ public class Controller {
 	public static List<Consultant> getConsultants() {
 		return ConsultantDAO.getConsultants();
 	}
+
+	public static List<CustomerFolder> getCustomerFolder(String customerName) {
+		return CustomerFolderDAO.getCustomerFolder(customerName);
+	}
 }

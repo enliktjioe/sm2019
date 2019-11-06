@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerFolderDAO {
 
@@ -48,5 +50,31 @@ public class CustomerFolderDAO {
         else{
             return true;
         }
+    }
+
+    public static List<CustomerFolder> getCustomerFolder(String customerName){
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet result = null;
+        ArrayList<CustomerFolder> output = new ArrayList<CustomerFolder>();
+        try {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+            con = DriverManager.getConnection(
+                    "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
+            stmt = con.createStatement();
+            result = stmt.executeQuery(
+                    "SELECT customerName, dateOfBirth, age FROM customerFolder WHERE customerName = '"+customerName+"'");
+
+            while(result.next()){
+                CustomerFolder cust = new CustomerFolder();
+                cust.setName(result.getString("customerName"));
+                cust.setDateOfBirth(result.getString("dateOfBirth"));
+                cust.setAge(result.getInt("age"));
+                output.add(cust);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return output;
     }
 }

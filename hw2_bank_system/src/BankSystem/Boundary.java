@@ -57,7 +57,7 @@ public class Boundary {
 
 				boolean customerExists = Controller.isCustomerExist(customerName);
 				if(!customerExists) {
-					System.out.println("2. Enter Customer Date of Birth:");
+					System.out.println("2. Enter Customer Date of Birth: \n(FORMAT -> yyyy-mm-dd)");
 					String customerDOB = String.valueOf(scan.nextLine());
 					System.out.println("3. Enter Age:"); //TODO remove this and make a logic for set 'age' value based on DOB
 					int customerAge = Integer.valueOf(scan.nextLine());
@@ -85,12 +85,27 @@ public class Boundary {
 				}
 				break;
 			case 4:
+				System.out.println("Enter Customer Name:");
+				String custName = String.valueOf(scan.nextLine());
+				boolean isCustExists = Controller.isCustomerExist(custName);
+				if (isCustExists){
+					List<CustomerFolder> customerFolders = Controller.getCustomerFolder(custName);
+					System.out.println("Content of the Customer Folder:");
+					for(CustomerFolder cust : customerFolders){
+						System.out.println("Customer Name = " + cust.getName());
+						System.out.println("Date of Birth = " + cust.getDOB());
+						System.out.println("Age = " + cust.getAge());
+					}
+				}
+				else {
+					System.out.println("Customer name is not exist");
+				}
 				break;
 			default:
-				choice = 6;
+				choice = 5;
 				break;
 			}
-			if(choice == 6)
+			if(choice == 5)
 				break;
 		}
 		scan.close();
