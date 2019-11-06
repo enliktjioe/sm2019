@@ -20,7 +20,7 @@ public class Boundary {
 			DatabaseManager.initializeDatabase();
 		}
 		while(true){
-			System.out.println("Select an option:");
+			System.out.println("\nSelect an option:");
 			System.out.println("1. Enter Consultant");
 			System.out.println("2. Open Customer Folder and Assign Senior Consultant");
 			System.out.println("3. See List of Consultant");
@@ -78,6 +78,11 @@ public class Boundary {
 
 				break;
 			case 3:
+				List<Consultant> consultants = Controller.getConsultants();
+				System.out.println("The List of Consultants Available:");
+				for(Consultant c : consultants){
+					System.out.println(c.getName());
+				}
 				break;
 			case 4:
 				break;

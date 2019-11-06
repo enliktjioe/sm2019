@@ -66,4 +66,8 @@ public class Controller {
 	public static List<Student> getStudents(String courseTitle) {
 		return EnrollmentDAO.getStudents(courseTitle);
 	}
+
+	public static List<Consultant> getConsultants() {
+		return ConsultantDAO.getConsultants();
+	}
 }

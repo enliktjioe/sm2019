@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConsultantDAO {
 
@@ -48,5 +50,30 @@ public class ConsultantDAO {
 		else{
 			return true;
 		}
+	}
+
+
+	public static List<Consultant> getConsultants(){
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet result = null;
+		ArrayList<Consultant> output = new ArrayList<Consultant>();
+		try {
+			Class.forName("org.hsqldb.jdbc.JDBCDriver");
+			con = DriverManager.getConnection(
+					"jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
+			stmt = con.createStatement();
+			result = stmt.executeQuery(
+					"SELECT * FROM consultant");
+
+			while(result.next()){
+				Consultant c = new Consultant();
+				c.setName(result.getString("consultantName"));
+				output.add(c);
+			}
+		} catch (Exception e) {
+			e.printStackTrace(System.out);
+		}
+		return output;
 	}
 }
