@@ -22,19 +22,19 @@ public class Controller {
 		return exists;
 	}
 
-	public static boolean isSeniorConsultantExist(String customerName) {
-		boolean exists = ConsultantDAO.consultantWithNameExist(customerName, "SENIOR");
-		return exists;
-	}
+    public static boolean ConsultantWithNameExists(String consultantName, String consultantType) {
+        boolean exists = ConsultantDAO.consultantWithNameExist(consultantName, consultantType);
+        return exists;
+    }
 
-	public static boolean isCustomerExist(String customerName) {
+	public static boolean CustomerWithNameExist(String customerName) {
 		boolean exists = CustomerFolderDAO.customerWithNameExist(customerName);
 		return exists;
 	}
 
 	// Reference:
     // http://candidjava.com/tutorial/java-program-to-calculate-age-from-date-of-birth/
-    public static int countCustomerAge(String DOB) throws ParseException {
+    public static int getCustomerAge(String DOB) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date d = sdf.parse(DOB);
         Calendar c = Calendar.getInstance();
@@ -50,24 +50,35 @@ public class Controller {
         return diff1.getYears();
     }
 
+    public static void updateAgeCustomer(String customerName) throws ParseException {
+        CustomerFolder customer = new CustomerFolder();
+        customer.setNameCustomer(customerName);
+
+        String customerDOB = CustomerFolderDAO.getCustomerDOB(customer);
+        int updatedAge = getCustomerAge(customerDOB);
+        customer.setAge(updatedAge);
+        CustomerFolderDAO.updateAgeCustomer(customer);
+        return;
+    }
+
 	public static void createCustomer(String customerName, String DOB, int age) {
-        CustomerFolder customerFolder = new CustomerFolder();
-        customerFolder.setName(customerName);
-        customerFolder.setDateOfBirth(DOB);
-        customerFolder.setAge(age);
-        CustomerFolderDAO.insertCustomer(customerFolder);
+        CustomerFolder customer = new CustomerFolder();
+        customer.setNameCustomer(customerName);
+        customer.setDOBCustomer(DOB);
+        customer.setAge(age);
+        CustomerFolderDAO.insertCustomer(customer);
         return;
     }
 
-    public static void assignSeniorConsultant(String customerName, String consultantName) {
-        CustomerFolder customerFolder = new CustomerFolder();
-        customerFolder.setName(customerName);
-        customerFolder.setConsultantName(consultantName);
-        CustomerFolderDAO.assignSeniorConsultant(customerFolder);
+    public static void assignSeniorConsultantToCustomerFolder(String seniorConsultantName, String customerName) {
+        CustomerFolder customer = new CustomerFolder();
+        customer.setConsultantName(seniorConsultantName);
+        customer.setNameCustomer(customerName);
+        CustomerFolderDAO.assignSeniorConsultant(customer);
         return;
     }
 
-	public static List<Consultant> getConsultants() {
+	public static List<Consultant> getListAvailableConsultant() {
 		return ConsultantDAO.getConsultants();
 	}
 

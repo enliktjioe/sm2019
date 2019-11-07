@@ -73,6 +73,49 @@ public class CustomerFolderDAO {
         }
     }
 
+    public static String getCustomerDOB(CustomerFolder customer){
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet result = null;
+        String output = "";
+        try {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+            con = DriverManager.getConnection(
+                    "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
+            stmt = con.createStatement();
+            result = stmt.executeQuery(
+                    "SELECT dateOfBirth FROM customerFolder WHERE customerName = '"+customer.getName()+"'");
+
+            while(result.next()){
+                output = result.getString("dateOfBirth");
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return output;
+    }
+
+    public static boolean updateAgeCustomer(CustomerFolder customer){
+        Connection con = null;
+        Statement stmt = null;
+        int result = 0;
+        try {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+            con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
+            stmt = con.createStatement();
+            result = stmt.executeUpdate("UPDATE customerFolder SET age = '"+customer.getAge()+"' WHERE customerName = '"+customer.getName()+"'");
+            con.commit();
+        }catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        if(result == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     public static List<CustomerFolder> getCustomerFolder(String customerName){
         Connection con = null;
         Statement stmt = null;
@@ -88,8 +131,8 @@ public class CustomerFolderDAO {
 
             while(result.next()){
                 CustomerFolder cust = new CustomerFolder();
-                cust.setName(result.getString("customerName"));
-                cust.setDateOfBirth(result.getString("dateOfBirth"));
+                cust.setNameCustomer(result.getString("customerName"));
+                cust.setDOBCustomer(result.getString("dateOfBirth"));
                 cust.setAge(result.getInt("age"));
                 output.add(cust);
             }

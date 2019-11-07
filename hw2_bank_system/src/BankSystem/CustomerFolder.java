@@ -22,10 +22,10 @@ public class CustomerFolder {
     }
 
 
-    public void setName(String nextLine) {
+    public void setNameCustomer(String nextLine) {
         this.customerName = nextLine;
     }
-    public void setDateOfBirth(String nextLine) { this.dateOfBirth = nextLine; }
+    public void setDOBCustomer(String nextLine) { this.dateOfBirth = nextLine; }
     public void setAge(int nextLine) {
         this.age = nextLine;
     }
