@@ -13,9 +13,7 @@ public class DatabaseManager {
 			con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement();
 			stmt.executeUpdate("CREATE TABLE customerFolder (customerName varchar(20) NOT NULL, dateOfBirth date, age int, assignedConsultant varchar(20) NOT NULL, PRIMARY KEY (customerName));");
-			stmt.executeUpdate("CREATE TABLE consultant (consultantName varchar(20) NOT NULL, PRIMARY KEY (consultantName));");
-//			stmt.executeUpdate("CREATE TABLE student (studentID varchar(20) NOT NULL, PRIMARY KEY (studentID));");
-//			stmt.executeUpdate("CREATE TABLE enrollment (studentID varchar(20) NOT NULL, title varchar(20) NOT NULL, PRIMARY KEY (studentID,title), FOREIGN KEY (studentID) REFERENCES student(studentID), FOREIGN KEY (title) REFERENCES course(title));");
+			stmt.executeUpdate("CREATE TABLE consultant (consultantName varchar(20) NOT NULL, consultantType varchar(20) NOT NULL, PRIMARY KEY (consultantName));");
 			System.out.println("Database initialized successfully");
 		}catch (Exception e) {
 			e.printStackTrace(System.out);
@@ -30,8 +28,6 @@ public class DatabaseManager {
 			Class.forName("org.hsqldb.jdbc.JDBCDriver");
 			con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement();
-//			stmt.executeUpdate("DROP TABLE enrollment;");
-//			stmt.executeUpdate("DROP TABLE student;");
 			stmt.executeUpdate("DROP TABLE customerFolder;");
 			stmt.executeUpdate("DROP TABLE consultant;");
 			System.out.println("Database reset successfully");

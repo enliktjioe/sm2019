@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ConsultantDAO {
 
-	public static boolean consultantWithNameExist(String consultantName){
+	public static boolean consultantWithNameExist(String consultantName, String consultantType){
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet result = null;
@@ -20,7 +20,7 @@ public class ConsultantDAO {
 					"jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement();
 			result = stmt.executeQuery(
-					"SELECT * FROM consultant WHERE consultantName = '"+consultantName+"'");
+					"SELECT * FROM consultant WHERE consultantName = '"+consultantName+"' AND consultantType = '"+consultantType+"'");
 			while(result.next()){
 				output= true;
 			}
@@ -39,7 +39,7 @@ public class ConsultantDAO {
 			Class.forName("org.hsqldb.jdbc.JDBCDriver"); 
 			con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement(); 
-			result = stmt.executeUpdate("INSERT INTO consultant VALUES ('"+ consultant.getName()+"')");
+			result = stmt.executeUpdate("INSERT INTO consultant VALUES ('"+ consultant.getName()+"', '"+consultant.getConsultantType()+"')");
 			con.commit();
 		}catch (Exception e) { 
 			e.printStackTrace(System.out); 
@@ -69,6 +69,7 @@ public class ConsultantDAO {
 			while(result.next()){
 				Consultant c = new Consultant();
 				c.setName(result.getString("consultantName"));
+				c.setConsultantType(result.getString("consultantType"));
 				output.add(c);
 			}
 		} catch (Exception e) {

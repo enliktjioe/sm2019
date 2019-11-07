@@ -1,15 +1,9 @@
 package BankSystem;
 
-import javax.naming.ldap.Control;
 import java.util.List;
 import java.util.Scanner;
 
 public class Boundary {
-
-	enum consultantEnum {
-		JUNIOR,
-		SENIOR
-	}
 	
 	public static void main(String[] args) {
 		System.out.println("Do you want to initialize the database? (Y/N)");
@@ -36,16 +30,16 @@ public class Boundary {
 				int menuOption = Integer.valueOf(scan.nextLine());
 				switch (menuOption){
 					case 1:
-						consultantType = consultantEnum.JUNIOR.name();
+						consultantType = "JUNIOR";
 						break;
 					case 2:
-						consultantType = consultantEnum.SENIOR.name();
+						consultantType = "SENIOR";
 						break;
 					default:
 						break;
 				}
 				System.out.println("Enter Consultant Name:");
-				boolean consultantExists = Controller.createConsultant(consultantType.concat(" " + scan.nextLine()));
+				boolean consultantExists = Controller.createConsultant(scan.nextLine(), consultantType);
 				if(!consultantExists)
 					System.out.println("New Consultant created!");
 				else
@@ -63,9 +57,9 @@ public class Boundary {
 					int customerAge = Integer.valueOf(scan.nextLine());
 					System.out.println("4. Enter Senior Consultant Name:");
 					String consultantName = String.valueOf(scan.nextLine());
-					boolean scExists = Controller.isSeniorConsultantExist(consultantName);
+                    boolean scExists = Controller.isSeniorConsultantExist(consultantName);
 					if (!scExists) {
-						Controller.createConsultant("SENIOR " + consultantName);
+						Controller.createConsultant(consultantName, "SENIOR");
 						System.out.println("New Senior Consultant created!");
 					} else {
 						Controller.createCustomer(customerName, customerDOB, customerAge, consultantName);
@@ -80,8 +74,9 @@ public class Boundary {
 			case 3:
 				List<Consultant> consultants = Controller.getConsultants();
 				System.out.println("The List of Consultants Available:");
+                System.out.println("Name" + " / " + "Consultant Type");
 				for(Consultant c : consultants){
-					System.out.println(c.getName());
+					System.out.println(c.getName() + " / " + c.getConsultantType());
 				}
 				break;
 			case 4:
