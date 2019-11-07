@@ -51,13 +51,10 @@ public class Controller {
     }
 
     public static void updateAgeCustomer(String customerName) throws ParseException {
-        CustomerFolder customer = new CustomerFolder();
-        customer.setNameCustomer(customerName);
-
-        String customerDOB = CustomerFolderDAO.getCustomerDOB(customer);
+        String customerDOB = CustomerFolderDAO.getCustomerDOB(customerName);
         int updatedAge = getCustomerAge(customerDOB);
-        customer.setAge(updatedAge);
-        CustomerFolderDAO.updateAgeCustomer(customer);
+
+        CustomerFolderDAO.updateAgeCustomer(customerName, updatedAge);
         return;
     }
 
@@ -82,7 +79,7 @@ public class Controller {
 		return ConsultantDAO.getConsultants();
 	}
 
-	public static List<CustomerFolder> getCustomerFolder(String customerName) {
-		return CustomerFolderDAO.getCustomerFolder(customerName);
+	public static List<CustomerFolder> getContentCustomer(String customerName) {
+		return CustomerFolderDAO.getContentCustomer(customerName);
 	}
 }

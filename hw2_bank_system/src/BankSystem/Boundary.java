@@ -127,7 +127,7 @@ public class Boundary {
 				if (customerNameExists){
 				    Controller.updateAgeCustomer(custName); // Updating customer age based on current time
 
-					List<CustomerFolder> customerFolders = Controller.getCustomerFolder(custName);
+					List<CustomerFolder> customerFolders = Controller.getContentCustomer(custName);
 					System.out.println("Content of the Customer Folder [" + custName + "] :");
 					for(CustomerFolder cust : customerFolders){
 						System.out.println("Customer Name = " + cust.getName());

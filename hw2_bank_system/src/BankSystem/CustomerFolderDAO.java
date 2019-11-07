@@ -73,7 +73,7 @@ public class CustomerFolderDAO {
         }
     }
 
-    public static String getCustomerDOB(CustomerFolder customer){
+    public static String getCustomerDOB(String customerName){
         Connection con = null;
         Statement stmt = null;
         ResultSet result = null;
@@ -84,7 +84,7 @@ public class CustomerFolderDAO {
                     "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
             stmt = con.createStatement();
             result = stmt.executeQuery(
-                    "SELECT dateOfBirth FROM customerFolder WHERE customerName = '"+customer.getName()+"'");
+                    "SELECT dateOfBirth FROM customerFolder WHERE customerName = '"+customerName+"'");
 
             while(result.next()){
                 output = result.getString("dateOfBirth");
@@ -95,7 +95,7 @@ public class CustomerFolderDAO {
         return output;
     }
 
-    public static boolean updateAgeCustomer(CustomerFolder customer){
+    public static boolean updateAgeCustomer(String customerName, int customerAge){
         Connection con = null;
         Statement stmt = null;
         int result = 0;
@@ -103,7 +103,7 @@ public class CustomerFolderDAO {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
             con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
             stmt = con.createStatement();
-            result = stmt.executeUpdate("UPDATE customerFolder SET age = '"+customer.getAge()+"' WHERE customerName = '"+customer.getName()+"'");
+            result = stmt.executeUpdate("UPDATE customerFolder SET age = '"+customerAge+"' WHERE customerName = '"+customerName+"'");
             con.commit();
         }catch (Exception e) {
             e.printStackTrace(System.out);
@@ -116,7 +116,7 @@ public class CustomerFolderDAO {
         }
     }
 
-    public static List<CustomerFolder> getCustomerFolder(String customerName){
+    public static List<CustomerFolder> getContentCustomer(String customerName){
         Connection con = null;
         Statement stmt = null;
         ResultSet result = null;

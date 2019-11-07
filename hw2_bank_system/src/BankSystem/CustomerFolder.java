@@ -11,9 +11,7 @@ public class CustomerFolder {
     public String getName() {
         return customerName;
     }
-    public String getDOB() {
-        return dateOfBirth;
-    }
+    public String getDOB() { return dateOfBirth; }
     public int getAge() {
         return age;
     }
