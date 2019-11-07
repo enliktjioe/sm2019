@@ -90,7 +90,7 @@ public class Boundary {
                         System.out.println("New Senior Consultant created!");
                     } else {
                         Controller.assignSeniorConsultant(cn, scName);
-                        System.out.println("Senior Consultant " + scName + " assigned to Customer Folder " + cn);
+                        System.out.println("Senior Consultant [" + scName + "] assigned to Customer Folder [" + cn + "]");
                     }
                 }
                 else {
@@ -112,7 +112,7 @@ public class Boundary {
 				boolean isCustExists = Controller.isCustomerExist(custName);
 				if (isCustExists){
 					List<CustomerFolder> customerFolders = Controller.getCustomerFolder(custName);
-					System.out.println("Content of the Customer Folder:");
+					System.out.println("Content of the Customer Folder [" + custName + "] :");
 					for(CustomerFolder cust : customerFolders){
 						System.out.println("Customer Name = " + cust.getName());
 						System.out.println("Date of Birth = " + cust.getDOB());
