@@ -45,7 +45,7 @@ public class Controller {
         LocalDate l1 = LocalDate.of(year, month, date);
         LocalDate now1 = LocalDate.now();
         Period diff1 = Period.between(l1, now1);
-        System.out.println("Age: " + diff1.getYears() + "years");
+        System.out.println("Age: " + diff1.getYears() + " years");
 
         return diff1.getYears();
     }

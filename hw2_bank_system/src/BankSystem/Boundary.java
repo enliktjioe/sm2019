@@ -90,7 +90,7 @@ public class Boundary {
                         System.out.println("New Senior Consultant created!");
                     } else {
                         Controller.assignSeniorConsultant(cn, scName);
-                        System.out.println("Senior Consultant " + scName + " assigned to Customer Folder " + cn);
+                        System.out.println("Senior Consultant [" + scName + "] assigned to Customer Folder [" + cn + "]");
                     }
                 }
                 else {
