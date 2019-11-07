@@ -5,7 +5,7 @@ public class Consultant {
 	private String consultantName;
 	private String consultantType;
 	
-	public String getName() {
+	public String getConsultantName() {
 		return consultantName;
 	}
 
@@ -13,7 +13,7 @@ public class Consultant {
 		return consultantType;
 	}
 
-	public void setName(String nextLine) {
+	public void setConsultantName(String nextLine) {
 		this.consultantName = nextLine;
 	}
 

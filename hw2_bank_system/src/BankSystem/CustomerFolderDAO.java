@@ -31,7 +31,7 @@ public class CustomerFolderDAO {
     }
 
 
-    public static boolean insertCustomer(CustomerFolder customer, String DOB, int age, String consultantName){
+    public static boolean insertCustomer(CustomerFolder customer){
         Connection con = null;
         Statement stmt = null;
         int result = 0;
@@ -39,7 +39,28 @@ public class CustomerFolderDAO {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
             con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
             stmt = con.createStatement();
-            result = stmt.executeUpdate("INSERT INTO customerFolder VALUES ('"+ customer.getName()+"', '"+DOB+"', '"+age+"', '"+consultantName+"')");
+            result = stmt.executeUpdate("INSERT INTO customerFolder VALUES ('"+customer.getName()+"', '"+customer.getDOB()+"', '"+customer.getAge()+"', '')");
+            con.commit();
+        }catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        if(result == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public static boolean assignSeniorConsultant(CustomerFolder customer){
+        Connection con = null;
+        Statement stmt = null;
+        int result = 0;
+        try {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+            con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
+            stmt = con.createStatement();
+            result = stmt.executeUpdate("UPDATE customerFolder SET assignedConsultant = '"+customer.getConsultantName()+"' WHERE customerName = '"+customer.getName()+"'");
             con.commit();
         }catch (Exception e) {
             e.printStackTrace(System.out);

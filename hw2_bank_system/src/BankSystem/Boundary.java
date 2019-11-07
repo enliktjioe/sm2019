@@ -2,10 +2,11 @@ package BankSystem;
 
 import java.util.List;
 import java.util.Scanner;
+import java.text.ParseException;
 
 public class Boundary {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		System.out.println("Do you want to initialize the database? (Y/N)");
 		Scanner scan= new Scanner(System.in);
 		String line = scan.nextLine();
@@ -17,9 +18,10 @@ public class Boundary {
 			System.out.println("\nSelect an option:");
 			System.out.println("1. Enter Consultant");
 			System.out.println("2. Open Customer Folder and Assign Senior Consultant");
-			System.out.println("3. See List of Consultant");
-			System.out.println("4. See Content of Customer Folder");
-			System.out.println("5. Exit");
+            System.out.println("3. Assign Senior Consultant");
+			System.out.println("4. See List of Consultant");
+			System.out.println("5. See Content of Customer Folder");
+			System.out.println("6. Exit");
 			int choice = Integer.valueOf(scan.nextLine());
 			switch (choice){
 			case 1:
@@ -53,17 +55,20 @@ public class Boundary {
 				if(!customerExists) {
 					System.out.println("2. Enter Customer Date of Birth: \n(FORMAT -> yyyy-mm-dd)");
 					String customerDOB = String.valueOf(scan.nextLine());
-					System.out.println("3. Enter Age:"); //TODO remove this and make a logic for set 'age' value based on DOB
-					int customerAge = Integer.valueOf(scan.nextLine());
-					System.out.println("4. Enter Senior Consultant Name:");
+
+					// count customerAge based on DOB and currentDate
+					int customerAge = Controller.countCustomerAge(customerDOB);
+                    Controller.createCustomer(customerName, customerDOB, customerAge);
+
+					System.out.println("3. Enter Senior Consultant Name:");
 					String consultantName = String.valueOf(scan.nextLine());
                     boolean scExists = Controller.isSeniorConsultantExist(consultantName);
 					if (!scExists) {
 						Controller.createConsultant(consultantName, "SENIOR");
 						System.out.println("New Senior Consultant created!");
 					} else {
-						Controller.createCustomer(customerName, customerDOB, customerAge, consultantName);
-						System.out.println("New Customer Folder created!");
+						Controller.assignSeniorConsultant(customerName, consultantName);
+						System.out.println("Senior Consultant " + consultantName + " assigned to Customer Folder " + customerName);
 					}
 				}
 				else {
@@ -71,15 +76,37 @@ public class Boundary {
 				}
 
 				break;
-			case 3:
+            case 3:
+                System.out.println("1. Enter Customer Name:");
+                String cn = String.valueOf(scan.nextLine());
+
+                boolean cnExists = Controller.isCustomerExist(cn);
+                if(cnExists) {
+                    System.out.println("2. Enter Senior Consultant Name:");
+                    String scName = String.valueOf(scan.nextLine());
+                    boolean scExists = Controller.isSeniorConsultantExist(scName);
+                    if (!scExists) {
+                        Controller.createConsultant(scName, "SENIOR");
+                        System.out.println("New Senior Consultant created!");
+                    } else {
+                        Controller.assignSeniorConsultant(cn, scName);
+                        System.out.println("Senior Consultant " + scName + " assigned to Customer Folder " + cn);
+                    }
+                }
+                else {
+                    System.out.println("Customer name did not exist!");
+                }
+
+                break;
+			case 4:
 				List<Consultant> consultants = Controller.getConsultants();
 				System.out.println("The List of Consultants Available:");
                 System.out.println("Name" + " / " + "Consultant Type");
 				for(Consultant c : consultants){
-					System.out.println(c.getName() + " / " + c.getConsultantType());
+					System.out.println(c.getConsultantName() + " / " + c.getConsultantType());
 				}
 				break;
-			case 4:
+			case 5:
 				System.out.println("Enter Customer Name:");
 				String custName = String.valueOf(scan.nextLine());
 				boolean isCustExists = Controller.isCustomerExist(custName);
@@ -97,10 +124,10 @@ public class Boundary {
 				}
 				break;
 			default:
-				choice = 5;
+				choice = 6;
 				break;
 			}
-			if(choice == 5)
+			if(choice == 6)
 				break;
 		}
 		scan.close();

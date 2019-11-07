@@ -39,7 +39,7 @@ public class ConsultantDAO {
 			Class.forName("org.hsqldb.jdbc.JDBCDriver"); 
 			con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement(); 
-			result = stmt.executeUpdate("INSERT INTO consultant VALUES ('"+ consultant.getName()+"', '"+consultant.getConsultantType()+"')");
+			result = stmt.executeUpdate("INSERT INTO consultant VALUES ('"+ consultant.getConsultantName()+"', '"+consultant.getConsultantType()+"')");
 			con.commit();
 		}catch (Exception e) { 
 			e.printStackTrace(System.out); 
@@ -68,7 +68,7 @@ public class ConsultantDAO {
 
 			while(result.next()){
 				Consultant c = new Consultant();
-				c.setName(result.getString("consultantName"));
+				c.setConsultantName(result.getString("consultantName"));
 				c.setConsultantType(result.getString("consultantType"));
 				output.add(c);
 			}
