@@ -13,7 +13,7 @@ public class DatabaseManager {
 			con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement();
 			stmt.executeUpdate("CREATE TABLE customerFolder (customerName varchar(20) NOT NULL, dateOfBirth date, age int, assignedConsultant varchar(20) NOT NULL, PRIMARY KEY (customerName));");
-			stmt.executeUpdate("CREATE TABLE consultant (consultantName varchar(20) NOT NULL, consultantType varchar(20) NOT NULL, PRIMARY KEY (consultantName));");
+			stmt.executeUpdate("CREATE TABLE consultant (consultantName varchar(20) NOT NULL, consultantType varchar(20) NOT NULL, isAssigned BOOLEAN DEFAULT FALSE NOT NULL, PRIMARY KEY (consultantName));");
 			System.out.println("Database initialized successfully");
 		}catch (Exception e) {
 			e.printStackTrace(System.out);

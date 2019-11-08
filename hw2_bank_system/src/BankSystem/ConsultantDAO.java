@@ -39,11 +39,32 @@ public class ConsultantDAO {
 			Class.forName("org.hsqldb.jdbc.JDBCDriver"); 
 			con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement(); 
-			result = stmt.executeUpdate("INSERT INTO consultant VALUES ('"+ consultant.getConsultantName()+"', '"+consultant.getConsultantType().name()+"')");
+			result = stmt.executeUpdate("INSERT INTO consultant VALUES ('"+ consultant.getConsultantName()+"', '"+consultant.getConsultantType().name()+"', '"+consultant.getIsAssigned()+"')");
 			con.commit();
 		}catch (Exception e) { 
 			e.printStackTrace(System.out); 
 		} 
+		if(result == 0){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+
+	public static boolean updateAssignedConsultant(Consultant consultant){
+		Connection con = null;
+		Statement stmt = null;
+		int result = 0;
+		try {
+			Class.forName("org.hsqldb.jdbc.JDBCDriver");
+			con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
+			stmt = con.createStatement();
+			result = stmt.executeUpdate("UPDATE consultant SET isAssigned = '"+consultant.getIsAssigned()+"' WHERE consultantName = '"+consultant.getConsultantName()+"'");
+			con.commit();
+		}catch (Exception e) {
+			e.printStackTrace(System.out);
+		}
 		if(result == 0){
 			return false;
 		}
@@ -64,7 +85,7 @@ public class ConsultantDAO {
 					"jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement();
 			result = stmt.executeQuery(
-					"SELECT * FROM consultant");
+					"SELECT * FROM consultant WHERE isAssigned = FALSE");
 
 			while(result.next()){
 				Consultant c = new Consultant();

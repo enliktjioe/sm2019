@@ -60,7 +60,7 @@ public class CustomerFolderDAO {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
             con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
             stmt = con.createStatement();
-            result = stmt.executeUpdate("UPDATE customerFolder SET assignedConsultant = '"+customer.getConsultantName()+"' WHERE customerName = '"+customer.getName()+"'");
+            result = stmt.executeUpdate("UPDATE customerFolder SET assignedConsultant = '"+customer.getAssignedConsultant()+"' WHERE customerName = '"+customer.getName()+"'");
             con.commit();
         }catch (Exception e) {
             e.printStackTrace(System.out);

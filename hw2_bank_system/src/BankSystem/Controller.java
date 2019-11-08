@@ -27,6 +27,7 @@ public class Controller {
 			Consultant consultant = new Consultant();
 			consultant.setConsultantName(consultantName);
 			consultant.setConsultantType(consultantType);
+            consultant.setIsAssigned(false);
 			ConsultantDAO.insertConsultant(consultant);
 		}
 		return exists;
@@ -34,7 +35,7 @@ public class Controller {
 
 	// Reference:
     // http://candidjava.com/tutorial/java-program-to-calculate-age-from-date-of-birth/
-    public static int getCustomerAge(String DOB) throws ParseException {
+    private static int getCustomerAge(String DOB) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date d = sdf.parse(DOB);
         Calendar c = Calendar.getInstance();
@@ -76,9 +77,14 @@ public class Controller {
 	    boolean exists = ConsultantWithNameExists(seniorConsultantName, ConsultantType.SENIOR);
 	    if (exists){
             CustomerFolder customer = new CustomerFolder();
-            customer.setConsultantName(seniorConsultantName);
+            customer.setAssignedConsultant(seniorConsultantName);
             customer.setNameCustomer(customerName);
             CustomerFolderDAO.assignSeniorConsultantToCustomerFolder(customer);
+
+            Consultant consultant = new Consultant();
+            consultant.setConsultantName(seniorConsultantName);
+            consultant.setIsAssigned(true);
+            ConsultantDAO.updateAssignedConsultant(consultant);
         }
 	    else{
 	        createConsultant(seniorConsultantName, ConsultantType.SENIOR);

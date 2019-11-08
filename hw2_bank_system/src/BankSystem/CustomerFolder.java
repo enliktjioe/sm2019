@@ -1,12 +1,10 @@
 package BankSystem;
 
-import java.util.Date;
-
 public class CustomerFolder {
     private String customerName;
     private String dateOfBirth;
     private int age;
-    private String consultantName;
+    private String assignedConsultant;
 
     public String getName() {
         return customerName;
@@ -15,8 +13,8 @@ public class CustomerFolder {
     public int getAge() {
         return age;
     }
-    public String getConsultantName() {
-        return consultantName;
+    public String getAssignedConsultant() {
+        return assignedConsultant;
     }
 
 
@@ -27,6 +25,6 @@ public class CustomerFolder {
     public void setAge(int nextLine) {
         this.age = nextLine;
     }
-    public void setConsultantName(String nextLine) { this.consultantName = nextLine; }
+    public void setAssignedConsultant(String nextLine) { this.assignedConsultant = nextLine; }
 
 }
