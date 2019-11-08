@@ -8,7 +8,7 @@ public class Boundary {
 
 	public static void main(String[] args) throws ParseException {
         String consultantName;
-        String consultantType;
+        ConsultantType consultantType;
         String customerName;
         boolean consultantNameExists;
         boolean customerNameExists;
@@ -37,13 +37,13 @@ public class Boundary {
 				int menuOption = Integer.valueOf(scan.nextLine());
 				switch (menuOption){
 					case 1:
-						consultantType = "JUNIOR";
+						consultantType = ConsultantType.JUNIOR;
 						break;
 					case 2:
-						consultantType = "SENIOR";
+						consultantType = ConsultantType.SENIOR;
 						break;
 					default:
-                        consultantType = "JUNIOR";
+                        consultantType = ConsultantType.JUNIOR;
 						break;
 				}
 				System.out.println("Enter Consultant Name:");
@@ -110,7 +110,7 @@ public class Boundary {
 				System.out.println("The List of Consultants Available:");
                 System.out.println("Name" + " / " + "Consultant Type");
 				for(Consultant c : listAvailableConsultants){
-					System.out.println(c.getConsultantName() + " / " + c.getConsultantType());
+					System.out.println(c.getConsultantName() + " / " + c.getConsultantType().name());
 				}
 				break;
 			case 5:

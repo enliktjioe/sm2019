@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class Controller {
 
-    public static boolean ConsultantWithNameExists(String consultantName, String consultantType) {
+    public static boolean ConsultantWithNameExists(String consultantName, ConsultantType consultantType) {
         boolean exists = ConsultantDAO.consultantWithNameExist(consultantName, consultantType);
         return exists;
     }
@@ -21,7 +21,7 @@ public class Controller {
         return exists;
     }
 
-	public static boolean createConsultant(String consultantName, String consultantType) {
+	public static boolean createConsultant(String consultantName, ConsultantType consultantType) {
 		boolean exists = ConsultantWithNameExists(consultantName, consultantType);
 		if(!exists){
 			Consultant consultant = new Consultant();
@@ -73,7 +73,7 @@ public class Controller {
     }
 
     public static boolean assignSeniorConsultantToCustomerFolder(String seniorConsultantName, String customerName) {
-	    boolean exists = ConsultantWithNameExists(seniorConsultantName, "SENIOR");
+	    boolean exists = ConsultantWithNameExists(seniorConsultantName, ConsultantType.SENIOR);
 	    if (exists){
             CustomerFolder customer = new CustomerFolder();
             customer.setConsultantName(seniorConsultantName);
@@ -81,7 +81,7 @@ public class Controller {
             CustomerFolderDAO.assignSeniorConsultantToCustomerFolder(customer);
         }
 	    else{
-	        createConsultant(seniorConsultantName, "SENIOR");
+	        createConsultant(seniorConsultantName, ConsultantType.SENIOR);
         }
         return exists;
     }

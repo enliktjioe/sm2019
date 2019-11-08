@@ -3,21 +3,15 @@ package BankSystem;
 public class Consultant {
 
 	private String consultantName;
-	private String consultantType;
-	
+	private ConsultantType type;
+
 	public String getConsultantName() {
 		return consultantName;
 	}
-
-	public String getConsultantType() {
-		return consultantType;
-	}
+	public ConsultantType getConsultantType() { return this.type; }
 
 	public void setConsultantName(String nextLine) {
 		this.consultantName = nextLine;
 	}
-
-	public void setConsultantType(String nextLine) {
-		this.consultantType = nextLine;
-	}
+	public void setConsultantType(ConsultantType type) { this.type = type; }
 }
