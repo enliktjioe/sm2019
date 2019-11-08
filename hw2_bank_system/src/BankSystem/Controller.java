@@ -60,13 +60,13 @@ public class Controller {
         return exists;
     }
 
-	public static boolean createCustomer(String customerName, String DOB, int age) {
+	public static boolean createCustomer(String customerName, String DOB) throws ParseException {
         boolean exists = CustomerWithNameExist(customerName);
         if (!exists){
             CustomerFolder customer = new CustomerFolder();
             customer.setNameCustomer(customerName);
             customer.setDOBCustomer(DOB);
-            customer.setAge(age);
+            customer.setAge(getCustomerAge(DOB));
             CustomerFolderDAO.insertCustomer(customer);
         }
         return exists;

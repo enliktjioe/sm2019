@@ -12,7 +12,6 @@ public class Boundary {
 
         String customerName;
 		String customerDOB;
-		int customerAge;
 
         boolean consultantNameExists;
         boolean customerNameExists;
@@ -69,10 +68,7 @@ public class Boundary {
 				System.out.println("2. Enter Customer Date of Birth: \n(FORMAT -> yyyy-mm-dd)");
 				customerDOB = String.valueOf(scan.nextLine());
 
-				// count customerAge based on DOB and current date
-				customerAge = Controller.getCustomerAge(customerDOB);
-
-				customerNameExists = Controller.createCustomer(customerName, customerDOB, customerAge);
+				customerNameExists = Controller.createCustomer(customerName, customerDOB);
 				if(customerNameExists) {
                     System.out.println("Customer name already exists!");
 				}
