@@ -11,24 +11,24 @@ import java.util.Date;
 
 public class Controller {
 
+    public static boolean ConsultantWithNameExists(String consultantName, String consultantType) {
+        boolean exists = ConsultantDAO.consultantWithNameExist(consultantName, consultantType);
+        return exists;
+    }
+
+    public static boolean CustomerWithNameExist(String customerName) {
+        boolean exists = CustomerFolderDAO.customerWithNameExist(customerName);
+        return exists;
+    }
+
 	public static boolean createConsultant(String consultantName, String consultantType) {
-		boolean exists = ConsultantDAO.consultantWithNameExist(consultantName, consultantType);
+		boolean exists = ConsultantWithNameExists(consultantName, consultantType);
 		if(!exists){
 			Consultant consultant = new Consultant();
 			consultant.setConsultantName(consultantName);
 			consultant.setConsultantType(consultantType);
 			ConsultantDAO.insertConsultant(consultant);
 		}
-		return exists;
-	}
-
-    public static boolean ConsultantWithNameExists(String consultantName, String consultantType) {
-        boolean exists = ConsultantDAO.consultantWithNameExist(consultantName, consultantType);
-        return exists;
-    }
-
-	public static boolean CustomerWithNameExist(String customerName) {
-		boolean exists = CustomerFolderDAO.customerWithNameExist(customerName);
 		return exists;
 	}
 
@@ -50,29 +50,40 @@ public class Controller {
         return diff1.getYears();
     }
 
-    public static void updateAgeCustomer(String customerName) throws ParseException {
-        String customerDOB = CustomerFolderDAO.getCustomerDOB(customerName);
-        int updatedAge = getCustomerAge(customerDOB);
-
-        CustomerFolderDAO.updateAgeCustomer(customerName, updatedAge);
-        return;
+    public static boolean updateAgeCustomer(String customerName) throws ParseException {
+        boolean exists = CustomerWithNameExist(customerName);
+        if(exists){
+            String customerDOB = CustomerFolderDAO.getCustomerDOB(customerName);
+            int updatedAge = getCustomerAge(customerDOB);
+            CustomerFolderDAO.updateAgeCustomer(customerName, updatedAge);
+        }
+        return exists;
     }
 
-	public static void createCustomer(String customerName, String DOB, int age) {
-        CustomerFolder customer = new CustomerFolder();
-        customer.setNameCustomer(customerName);
-        customer.setDOBCustomer(DOB);
-        customer.setAge(age);
-        CustomerFolderDAO.insertCustomer(customer);
-        return;
+	public static boolean createCustomer(String customerName, String DOB, int age) {
+        boolean exists = CustomerWithNameExist(customerName);
+        if (!exists){
+            CustomerFolder customer = new CustomerFolder();
+            customer.setNameCustomer(customerName);
+            customer.setDOBCustomer(DOB);
+            customer.setAge(age);
+            CustomerFolderDAO.insertCustomer(customer);
+        }
+        return exists;
     }
 
-    public static void assignSeniorConsultantToCustomerFolder(String seniorConsultantName, String customerName) {
-        CustomerFolder customer = new CustomerFolder();
-        customer.setConsultantName(seniorConsultantName);
-        customer.setNameCustomer(customerName);
-        CustomerFolderDAO.assignSeniorConsultant(customer);
-        return;
+    public static boolean assignSeniorConsultantToCustomerFolder(String seniorConsultantName, String customerName) {
+	    boolean exists = ConsultantWithNameExists(seniorConsultantName, "SENIOR");
+	    if (exists){
+            CustomerFolder customer = new CustomerFolder();
+            customer.setConsultantName(seniorConsultantName);
+            customer.setNameCustomer(customerName);
+            CustomerFolderDAO.assignSeniorConsultantToCustomerFolder(customer);
+        }
+	    else{
+	        createConsultant(seniorConsultantName, "SENIOR");
+        }
+        return exists;
     }
 
 	public static List<Consultant> getListAvailableConsultant() {

@@ -52,7 +52,7 @@ public class CustomerFolderDAO {
         }
     }
 
-    public static boolean assignSeniorConsultant(CustomerFolder customer){
+    public static boolean assignSeniorConsultantToCustomerFolder(CustomerFolder customer){
         Connection con = null;
         Statement stmt = null;
         int result = 0;

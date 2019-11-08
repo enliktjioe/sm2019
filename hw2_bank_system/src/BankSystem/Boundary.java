@@ -6,8 +6,6 @@ import java.text.ParseException;
 
 public class Boundary {
 
-
-
 	public static void main(String[] args) throws ParseException {
         String consultantName;
         String consultantType;
@@ -51,46 +49,42 @@ public class Boundary {
 				System.out.println("Enter Consultant Name:");
 				consultantName = String.valueOf(scan.nextLine());
 
-				consultantNameExists = Controller.ConsultantWithNameExists(consultantName, consultantType);
+				consultantNameExists = Controller.createConsultant(consultantName, consultantType);
 
 				if(consultantNameExists) {
                     System.out.println("Consultant name already exists!");
                 }
 				else{
-                    Controller.createConsultant(consultantName, consultantType);
                     System.out.println("New Consultant added!");
                 }
-
 				break;
 			case 2:
 				System.out.println("1. Enter Customer Name:");
 				customerName = String.valueOf(scan.nextLine());
 
-				customerNameExists = Controller.CustomerWithNameExist(customerName);
+				System.out.println("2. Enter Customer Date of Birth: \n(FORMAT -> yyyy-mm-dd)");
+				String customerDOB = String.valueOf(scan.nextLine());
+
+				// count customerAge based on DOB and currentDate
+				int customerAge = Controller.getCustomerAge(customerDOB);
+
+				customerNameExists = Controller.createCustomer(customerName, customerDOB, customerAge);
 				if(customerNameExists) {
                     System.out.println("Customer name already exists!");
 				}
 				else {
-                    System.out.println("2. Enter Customer Date of Birth: \n(FORMAT -> yyyy-mm-dd)");
-                    String customerDOB = String.valueOf(scan.nextLine());
-
-                    // count customerAge based on DOB and currentDate
-                    int customerAge = Controller.getCustomerAge(customerDOB);
-                    Controller.createCustomer(customerName, customerDOB, customerAge);
                     System.out.println("Customer Folder Added!");
                     System.out.println(" ");
                     System.out.println("3. Assign Senior Consultant. Enter consultant name:");
                     consultantName = String.valueOf(scan.nextLine());
-                    consultantNameExists = Controller.ConsultantWithNameExists(consultantName, "SENIOR");
+
+                    consultantNameExists = Controller.assignSeniorConsultantToCustomerFolder(consultantName, customerName);
                     if (consultantNameExists) {
-                        Controller.assignSeniorConsultantToCustomerFolder(consultantName, customerName);
                         System.out.println("Senior Consultant [" + consultantName + "] assigned to Customer Folder [" + customerName + "]");
                     } else {
-                        Controller.createConsultant(consultantName, "SENIOR");
                         System.out.println("New Senior Consultant created!");
                     }
 				}
-
 				break;
             case 3:
                 System.out.println("1. Enter Customer Name:");
@@ -100,14 +94,13 @@ public class Boundary {
                 if(customerNameExists) {
                     System.out.println("2. Enter Senior Consultant Name:");
                     consultantName = String.valueOf(scan.nextLine());
-                    consultantNameExists = Controller.ConsultantWithNameExists(consultantName, "SENIOR");
+                    consultantNameExists = Controller.assignSeniorConsultantToCustomerFolder(consultantName, customerName);
                     if (consultantNameExists) {
-                        Controller.assignSeniorConsultantToCustomerFolder(customerName, consultantName);
                         System.out.println("Senior Consultant [" + consultantName + "] assigned to Customer Folder [" + customerName + "]");
-                    } else {
-                        Controller.createConsultant(consultantName, "SENIOR");
+                    }
+                    else {
                         System.out.println("New Senior Consultant created!");}
-                }
+                	}
                 else {
                     System.out.println("Customer name did not exist!");
                 }
@@ -123,10 +116,8 @@ public class Boundary {
 			case 5:
 				System.out.println("Enter Customer Name:");
 				String custName = String.valueOf(scan.nextLine());
-				customerNameExists = Controller.CustomerWithNameExist(custName);
+				customerNameExists = Controller.updateAgeCustomer(custName); // Updating customer age based on current time
 				if (customerNameExists){
-				    Controller.updateAgeCustomer(custName); // Updating customer age based on current time
-
 					List<CustomerFolder> customerFolders = Controller.getContentCustomer(custName);
 					System.out.println("Content of the Customer Folder [" + custName + "] :");
 					for(CustomerFolder cust : customerFolders){
