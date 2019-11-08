@@ -9,7 +9,11 @@ public class Boundary {
 	public static void main(String[] args) throws ParseException {
         String consultantName;
         ConsultantType consultantType;
+
         String customerName;
+		String customerDOB;
+		int customerAge;
+
         boolean consultantNameExists;
         boolean customerNameExists;
 
@@ -63,10 +67,10 @@ public class Boundary {
 				customerName = String.valueOf(scan.nextLine());
 
 				System.out.println("2. Enter Customer Date of Birth: \n(FORMAT -> yyyy-mm-dd)");
-				String customerDOB = String.valueOf(scan.nextLine());
+				customerDOB = String.valueOf(scan.nextLine());
 
-				// count customerAge based on DOB and currentDate
-				int customerAge = Controller.getCustomerAge(customerDOB);
+				// count customerAge based on DOB and current date
+				customerAge = Controller.getCustomerAge(customerDOB);
 
 				customerNameExists = Controller.createCustomer(customerName, customerDOB, customerAge);
 				if(customerNameExists) {
@@ -115,11 +119,11 @@ public class Boundary {
 				break;
 			case 5:
 				System.out.println("Enter Customer Name:");
-				String custName = String.valueOf(scan.nextLine());
-				customerNameExists = Controller.updateAgeCustomer(custName); // Updating customer age based on current time
+				customerName = String.valueOf(scan.nextLine());
+				customerNameExists = Controller.updateAgeCustomer(customerName); // Updating customer age based on current date
 				if (customerNameExists){
-					List<CustomerFolder> customerFolders = Controller.getContentCustomer(custName);
-					System.out.println("Content of the Customer Folder [" + custName + "] :");
+					List<CustomerFolder> customerFolders = Controller.getContentCustomer(customerName);
+					System.out.println("Content of the Customer Folder [" + customerName + "] :");
 					for(CustomerFolder cust : customerFolders){
 						System.out.println("Customer Name = " + cust.getName());
 						System.out.println("Date of Birth = " + cust.getDOB());
