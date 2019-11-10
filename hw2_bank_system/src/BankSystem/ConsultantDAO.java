@@ -85,7 +85,7 @@ public class ConsultantDAO {
 					"jdbc:hsqldb:hsql://localhost/bankdb", "SA", "");
 			stmt = con.createStatement();
 			result = stmt.executeQuery(
-					"SELECT * FROM consultant WHERE isAssigned = FALSE");
+					"SELECT * FROM consultant");
 
 			while(result.next()){
 				Consultant c = new Consultant();

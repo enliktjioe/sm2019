@@ -22,7 +22,7 @@ public class CustomerFolder {
         this.customerName = nextLine;
     }
     public void setDOBCustomer(String nextLine) { this.dateOfBirth = nextLine; }
-    public void setAge(int nextLine) {
+    public void setAgeCustomer(int nextLine) {
         this.age = nextLine;
     }
     public void setAssignedConsultant(String nextLine) { this.assignedConsultant = nextLine; }

@@ -14,5 +14,5 @@ public class Consultant {
 
 	public void setConsultantName(String nextLine) { this.consultantName = nextLine; }
 	public void setConsultantType(ConsultantType type) { this.type = type; }
-    public void setIsAssigned(boolean isAssigned) { this.isAssigned = isAssigned; }
+    //public void setIsAssigned(boolean isAssigned) { this.isAssigned = isAssigned; }
 }

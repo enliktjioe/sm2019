@@ -27,7 +27,7 @@ public class Controller {
 			Consultant consultant = new Consultant();
 			consultant.setConsultantName(consultantName);
 			consultant.setConsultantType(consultantType);
-            consultant.setIsAssigned(false);
+            //consultant.setIsAssigned(false);
 			ConsultantDAO.insertConsultant(consultant);
 		}
 		return exists;
@@ -63,11 +63,12 @@ public class Controller {
 
 	public static boolean createCustomer(String customerName, String DOB) throws ParseException {
         boolean exists = CustomerWithNameExist(customerName);
+        int customerAge = getCustomerAge(DOB);
         if (!exists){
             CustomerFolder customer = new CustomerFolder();
             customer.setNameCustomer(customerName);
             customer.setDOBCustomer(DOB);
-            customer.setAge(getCustomerAge(DOB));
+            customer.setAgeCustomer(customerAge);
             CustomerFolderDAO.insertCustomer(customer);
         }
         return exists;
@@ -81,10 +82,10 @@ public class Controller {
             customer.setNameCustomer(customerName);
             CustomerFolderDAO.assignSeniorConsultantToCustomerFolder(customer);
 
-            Consultant consultant = new Consultant();
-            consultant.setConsultantName(seniorConsultantName);
-            consultant.setIsAssigned(true);
-            ConsultantDAO.updateAssignedConsultant(consultant);
+           // Consultant consultant = new Consultant();
+           // consultant.setConsultantName(seniorConsultantName);
+            //consultant.setIsAssigned(true);
+           // ConsultantDAO.updateAssignedConsultant(consultant);
         }
 	    else{
 	        createConsultant(seniorConsultantName, ConsultantType.SENIOR);
