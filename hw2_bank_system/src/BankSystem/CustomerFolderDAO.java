@@ -95,7 +95,7 @@ public class CustomerFolderDAO {
         return output;
     }
 
-    public static boolean updateAgeCustomer(String customerName, int customerAge){
+    public static void updateCustomerAge(String customerName, int customerAge){
         Connection con = null;
         Statement stmt = null;
         int result = 0;
@@ -105,14 +105,9 @@ public class CustomerFolderDAO {
             stmt = con.createStatement();
             result = stmt.executeUpdate("UPDATE customerFolder SET age = '"+customerAge+"' WHERE customerName = '"+customerName+"'");
             con.commit();
-        }catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace(System.out);
-        }
-        if(result == 0){
-            return false;
-        }
-        else{
-            return true;
         }
     }
 
@@ -133,7 +128,7 @@ public class CustomerFolderDAO {
                 CustomerFolder cust = new CustomerFolder();
                 cust.setNameCustomer(result.getString("customerName"));
                 cust.setDOBCustomer(result.getString("dateOfBirth"));
-                cust.setAge(result.getInt("age"));
+                cust.setAgeCustomer(result.getInt("age"));
                 output.add(cust);
             }
         } catch (Exception e) {

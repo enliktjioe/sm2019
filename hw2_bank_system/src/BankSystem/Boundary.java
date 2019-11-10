@@ -116,11 +116,11 @@ public class Boundary {
 			case 5:
 				System.out.println("Enter Customer Name:");
 				customerName = String.valueOf(scan.nextLine());
-				customerNameExists = Controller.updateAgeCustomer(customerName); // Updating customer age based on current date
+				customerNameExists = Controller.updateCustomerAge(customerName); // Updating customer age based on current date
 				if (customerNameExists){
-					List<CustomerFolder> customerFolders = Controller.getContentCustomer(customerName);
+					List<CustomerFolder> listCustomerFolder = Controller.getContentCustomer(customerName);
 					System.out.println("Content of the Customer Folder [" + customerName + "] :");
-					for(CustomerFolder cust : customerFolders){
+					for(CustomerFolder cust : listCustomerFolder){
 						System.out.println("Customer Name = " + cust.getName());
 						System.out.println("Date of Birth = " + cust.getDOB());
 						System.out.println("Age = " + cust.getAge());
