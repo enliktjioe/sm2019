@@ -11,81 +11,65 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		private boolean topLeftPressed;
 		
 		
-		public void raiseTopLeftPressed() {
-			synchronized(DigitalwatchStatemachine.this) {
-				topLeftPressed = true;
-				runCycle();
-			}
+		public synchronized void raiseTopLeftPressed() {
+			topLeftPressed = true;
+			runCycle();
 		}
 		
 		private boolean topLeftReleased;
 		
 		
-		public void raiseTopLeftReleased() {
-			synchronized(DigitalwatchStatemachine.this) {
-				topLeftReleased = true;
-				runCycle();
-			}
+		public synchronized void raiseTopLeftReleased() {
+			topLeftReleased = true;
+			runCycle();
 		}
 		
 		private boolean topRightPressed;
 		
 		
-		public void raiseTopRightPressed() {
-			synchronized(DigitalwatchStatemachine.this) {
-				topRightPressed = true;
-				runCycle();
-			}
+		public synchronized void raiseTopRightPressed() {
+			topRightPressed = true;
+			runCycle();
 		}
 		
 		private boolean topRightReleased;
 		
 		
-		public void raiseTopRightReleased() {
-			synchronized(DigitalwatchStatemachine.this) {
-				topRightReleased = true;
-				runCycle();
-			}
+		public synchronized void raiseTopRightReleased() {
+			topRightReleased = true;
+			runCycle();
 		}
 		
 		private boolean botLeftPressed;
 		
 		
-		public void raiseBotLeftPressed() {
-			synchronized(DigitalwatchStatemachine.this) {
-				botLeftPressed = true;
-				runCycle();
-			}
+		public synchronized void raiseBotLeftPressed() {
+			botLeftPressed = true;
+			runCycle();
 		}
 		
 		private boolean botLeftReleased;
 		
 		
-		public void raiseBotLeftReleased() {
-			synchronized(DigitalwatchStatemachine.this) {
-				botLeftReleased = true;
-				runCycle();
-			}
+		public synchronized void raiseBotLeftReleased() {
+			botLeftReleased = true;
+			runCycle();
 		}
 		
 		private boolean botRightPressed;
 		
 		
-		public void raiseBotRightPressed() {
-			synchronized(DigitalwatchStatemachine.this) {
-				botRightPressed = true;
-				runCycle();
-			}
+		public synchronized void raiseBotRightPressed() {
+			botRightPressed = true;
+			runCycle();
 		}
 		
 		private boolean botRightReleased;
 		
 		
-		public void raiseBotRightReleased() {
-			synchronized(DigitalwatchStatemachine.this) {
-				botRightReleased = true;
-				runCycle();
-			}
+		public synchronized void raiseBotRightReleased() {
+			botRightReleased = true;
+			runCycle();
 		}
 		
 		protected void clearEvents() {
@@ -134,6 +118,8 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	public enum State {
 		main_region_Dead,
 		main_region_Alive,
+		main_region_Digital_Watch,
+		main_region_Digital_Watch_sub_region_Time_Mode,
 		$NullState$
 	};
 	
@@ -143,20 +129,38 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	
 	private ITimer timer;
 	
-	private final boolean[] timeEvents = new boolean[2];
+	private final boolean[] timeEvents = new boolean[4];
 	
 	private long n;
 	
 	protected long getN() {
-		synchronized(DigitalwatchStatemachine.this) {
-			return n;
-		}
+		return n;
 	}
 	
 	protected void setN(long value) {
-		synchronized(DigitalwatchStatemachine.this) {
-			this.n = value;
-		}
+		this.n = value;
+	}
+	
+	
+	private boolean topRightPressed;
+	
+	protected boolean getTopRightPressed() {
+		return topRightPressed;
+	}
+	
+	protected void setTopRightPressed(boolean value) {
+		this.topRightPressed = value;
+	}
+	
+	
+	private long lightsOffCounter;
+	
+	protected long getLightsOffCounter() {
+		return lightsOffCounter;
+	}
+	
+	protected void setLightsOffCounter(long value) {
+		this.lightsOffCounter = value;
 	}
 	
 	
@@ -185,6 +189,10 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		clearEvents();
 		clearOutEvents();
 		setN(0);
+		
+		setTopRightPressed(false);
+		
+		setLightsOffCounter(2000);
 	}
 	
 	public synchronized void enter() {
@@ -211,6 +219,9 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 				break;
 			case main_region_Alive:
 				main_region_Alive_react(true);
+				break;
+			case main_region_Digital_Watch_sub_region_Time_Mode:
+				main_region_Digital_Watch_sub_region_Time_Mode_react(true);
 				break;
 			default:
 				// $NullState$
@@ -263,6 +274,11 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 			return stateVector[0] == State.main_region_Dead;
 		case main_region_Alive:
 			return stateVector[0] == State.main_region_Alive;
+		case main_region_Digital_Watch:
+			return stateVector[0].ordinal() >= State.
+					main_region_Digital_Watch.ordinal()&& stateVector[0].ordinal() <= State.main_region_Digital_Watch_sub_region_Time_Mode.ordinal();
+		case main_region_Digital_Watch_sub_region_Time_Mode:
+			return stateVector[0] == State.main_region_Digital_Watch_sub_region_Time_Mode;
 		default:
 			return false;
 		}
@@ -327,6 +343,20 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		setN((((n + 1)) % 6));
 	}
 	
+	/* Entry action for state 'Digital Watch'. */
+	private void entryAction_main_region_Digital_Watch() {
+		timer.setTimer(this, 2, (1 * 1000), true);
+		
+		sCIDisplay.operationCallback.refreshDateDisplay();
+	}
+	
+	/* Entry action for state 'Time Mode'. */
+	private void entryAction_main_region_Digital_Watch_sub_region_Time_Mode() {
+		timer.setTimer(this, 3, (1 * 1000), true);
+		
+		sCIDisplay.operationCallback.refreshTimeDisplay();
+	}
+	
 	/* Exit action for state 'Dead'. */
 	private void exitAction_main_region_Dead() {
 		timer.unsetTimer(this, 0);
@@ -335,6 +365,16 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	/* Exit action for state 'Alive'. */
 	private void exitAction_main_region_Alive() {
 		timer.unsetTimer(this, 1);
+	}
+	
+	/* Exit action for state 'Digital Watch'. */
+	private void exitAction_main_region_Digital_Watch() {
+		timer.unsetTimer(this, 2);
+	}
+	
+	/* Exit action for state 'Time Mode'. */
+	private void exitAction_main_region_Digital_Watch_sub_region_Time_Mode() {
+		timer.unsetTimer(this, 3);
 	}
 	
 	/* 'default' enter sequence for state Dead */
@@ -351,9 +391,27 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		stateVector[0] = State.main_region_Alive;
 	}
 	
+	/* 'default' enter sequence for state Digital Watch */
+	private void enterSequence_main_region_Digital_Watch_default() {
+		entryAction_main_region_Digital_Watch();
+		enterSequence_main_region_Digital_Watch_sub_region_default();
+	}
+	
+	/* 'default' enter sequence for state Time Mode */
+	private void enterSequence_main_region_Digital_Watch_sub_region_Time_Mode_default() {
+		entryAction_main_region_Digital_Watch_sub_region_Time_Mode();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Digital_Watch_sub_region_Time_Mode;
+	}
+	
 	/* 'default' enter sequence for region main region */
 	private void enterSequence_main_region_default() {
 		react_main_region__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region sub region */
+	private void enterSequence_main_region_Digital_Watch_sub_region_default() {
+		react_main_region_Digital_Watch_sub_region__entry_Default();
 	}
 	
 	/* Default exit sequence for state Dead */
@@ -372,6 +430,14 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		exitAction_main_region_Alive();
 	}
 	
+	/* Default exit sequence for state Time Mode */
+	private void exitSequence_main_region_Digital_Watch_sub_region_Time_Mode() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_Digital_Watch_sub_region_Time_Mode();
+	}
+	
 	/* Default exit sequence for region main region */
 	private void exitSequence_main_region() {
 		switch (stateVector[0]) {
@@ -381,6 +447,21 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		case main_region_Alive:
 			exitSequence_main_region_Alive();
 			break;
+		case main_region_Digital_Watch_sub_region_Time_Mode:
+			exitSequence_main_region_Digital_Watch_sub_region_Time_Mode();
+			exitAction_main_region_Digital_Watch();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region sub region */
+	private void exitSequence_main_region_Digital_Watch_sub_region() {
+		switch (stateVector[0]) {
+		case main_region_Digital_Watch_sub_region_Time_Mode:
+			exitSequence_main_region_Digital_Watch_sub_region_Time_Mode();
+			break;
 		default:
 			break;
 		}
@@ -388,7 +469,12 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	
 	/* Default react sequence for initial entry  */
 	private void react_main_region__entry_Default() {
-		enterSequence_main_region_Dead_default();
+		enterSequence_main_region_Digital_Watch_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_Digital_Watch_sub_region__entry_Default() {
+		enterSequence_main_region_Digital_Watch_sub_region_Time_Mode_default();
 	}
 	
 	private boolean react() {
@@ -422,6 +508,50 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 				} else {
 					did_transition = false;
 				}
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Digital_Watch_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (react()==false) {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			if (timeEvents[2]) {
+				sCILogicUnit.operationCallback.increaseTimeByOne();
+				
+				sCIDisplay.operationCallback.refreshTimeDisplay();
+			}
+			if (sCIButtons.topRightPressed) {
+				sCIDisplay.operationCallback.setIndiglo();
+				
+				setTopRightPressed(true);
+			}
+			if (sCIButtons.topRightReleased) {
+				setTopRightPressed(false);
+				
+				setLightsOffCounter(2000);
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Digital_Watch_sub_region_Time_Mode_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (main_region_Digital_Watch_react(try_transition)==false) {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			if (timeEvents[3]) {
+				sCIDisplay.operationCallback.refreshTimeDisplay();
 			}
 		}
 		return did_transition;
