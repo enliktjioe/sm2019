@@ -43,21 +43,13 @@ public interface IDigitalwatchStatemachine extends ITimerCallback,IStatemachine 
 		
 		public void refreshDateDisplay();
 		
-		public void refreshAlarmDisplay();
-		
 		public void setIndiglo();
 		
 		public void unsetIndiglo();
 		
-		public void showFieldSelected();
-		
-		public void hideFieldSelected();
-		
 		public void hidePos(long pos);
 		
-		public void showSelection();
-		
-		public void hideSelection();
+		public void showPos(long pos);
 		
 	}
 	
@@ -79,11 +71,7 @@ public interface IDigitalwatchStatemachine extends ITimerCallback,IStatemachine 
 		
 		public void increasePos(long pos);
 		
-		public void startTimeEditMode();
-		
-		public void increaseSelection();
-		
-		public void selectNext();
+		public void selectNextField();
 		
 	}
 	
