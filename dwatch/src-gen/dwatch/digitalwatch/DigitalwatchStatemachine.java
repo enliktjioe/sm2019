@@ -423,7 +423,7 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		
 		timer.setTimer(this, 1, 10, true);
 		
-		timer.setTimer(this, 2, (1000 * 1000), true);
+		timer.setTimer(this, 2, 1000, true);
 		
 		sCIDisplay.operationCallback.refreshDateDisplay();
 	}
