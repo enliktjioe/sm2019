@@ -55,6 +55,10 @@ public interface IDigitalwatchStatemachine extends ITimerCallback,IStatemachine 
 		
 		public void hidePos(long pos);
 		
+		public void showSelection();
+		
+		public void hideSelection();
+		
 	}
 	
 	public SCIDisplay getSCIDisplay();
@@ -74,6 +78,12 @@ public interface IDigitalwatchStatemachine extends ITimerCallback,IStatemachine 
 		public void resetChrono();
 		
 		public void increasePos(long pos);
+		
+		public void startTimeEditMode();
+		
+		public void increaseSelection();
+		
+		public void selectNext();
 		
 	}
 	
