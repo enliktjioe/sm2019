@@ -307,7 +307,7 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	
 	/* Entry action for state 'Dead'. */
 	private void entryAction_main_region_Dead() {
-		timer.setTimer(this, 0, 200, false);
+		timer.setTimer(this, 0, 1000, false);
 		
 		sCIDisplay.operationCallback.refreshTimeDisplay();
 		
@@ -316,7 +316,7 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	
 	/* Entry action for state 'Alive'. */
 	private void entryAction_main_region_Alive() {
-		timer.setTimer(this, 1, 200, false);
+		timer.setTimer(this, 1, 1000, false);
 		
 		sCIDisplay.operationCallback.setIndiglo();
 		

@@ -6,10 +6,10 @@
         <outgoingTransitions xmi:id="_dMx7QO5cEeiKdpJzEd8gZw" specification="" target="_W8V38O5cEeiKdpJzEd8gZw"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_W8V38O5cEeiKdpJzEd8gZw" specification="entry /&#xA;  Display.refreshTimeDisplay;&#xA;  Display.unsetIndiglo" name="Dead" incomingTransitions="_dMx7QO5cEeiKdpJzEd8gZw _WrOdUO5dEeiKdpJzEd8gZw">
-        <outgoingTransitions xmi:id="_VK7IMO5dEeiKdpJzEd8gZw" specification="after 200ms" target="_R_MzEO5dEeiKdpJzEd8gZw"/>
+        <outgoingTransitions xmi:id="_VK7IMO5dEeiKdpJzEd8gZw" specification="after 1000ms" target="_R_MzEO5dEeiKdpJzEd8gZw"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_R_MzEO5dEeiKdpJzEd8gZw" specification="entry / &#xA;  Display.setIndiglo;&#xA;  LogicUnit.increaseTimeByOne;&#xA;  Display.hidePos(n);&#xA;  n = (n+1) % 6" name="Alive" incomingTransitions="_VK7IMO5dEeiKdpJzEd8gZw">
-        <outgoingTransitions xmi:id="_WrOdUO5dEeiKdpJzEd8gZw" specification="after 200ms" target="_W8V38O5cEeiKdpJzEd8gZw"/>
+        <outgoingTransitions xmi:id="_WrOdUO5dEeiKdpJzEd8gZw" specification="after 1000ms" target="_W8V38O5cEeiKdpJzEd8gZw"/>
       </vertices>
     </regions>
   </sgraph:Statechart>
