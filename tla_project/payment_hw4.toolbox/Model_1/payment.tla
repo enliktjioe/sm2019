@@ -43,7 +43,9 @@ begin User:
     GetNewCard:
       card_is_valid := TRUE;
     RenewPaymentMethod:
+\*      await ~account_investigating;
       account_locked := FALSE;
+      ghost_debt := 0;
   end either;
   end while
 end process
@@ -116,9 +118,9 @@ GetNewCard == /\ pc["user"] = "GetNewCard"
 
 RenewPaymentMethod == /\ pc["user"] = "RenewPaymentMethod"
                       /\ account_locked' = FALSE
+                      /\ ghost_debt' = 0
                       /\ pc' = [pc EXCEPT !["user"] = "User"]
-                      /\ UNCHANGED << card_is_valid, account_investigating, 
-                                      ghost_debt >>
+                      /\ UNCHANGED << card_is_valid, account_investigating >>
 
 user == User \/ TakeRide \/ GetNewCard \/ RenewPaymentMethod
 
@@ -139,5 +141,5 @@ Spec == Init /\ [][Next]_vars
 
 =============================================================================
 \* Modification History
-\* Last modified Tue Dec 10 16:43:02 EET 2019 by enlik
+\* Last modified Tue Dec 10 16:53:51 EET 2019 by enlik
 \* Created Fri Dec 06 17:14:00 EET 2019 by enlik

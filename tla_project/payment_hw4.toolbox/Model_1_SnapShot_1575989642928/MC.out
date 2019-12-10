@@ -2,7 +2,7 @@
 TLC2 Version 2.14 of 10 July 2019
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with fp 30 and seed 8407348797254460721 with 2 workers on 4 cores with 608MB heap and 1365MB offheap memory [pid: 3150] (Mac OS X 10.12.6 x86_64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+Running breadth-first search Model-Checking with fp 58 and seed -5337137638107419035 with 2 workers on 4 cores with 608MB heap and 1365MB offheap memory [pid: 3020] (Mac OS X 10.12.6 x86_64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -25,13 +25,13 @@ Semantic processing of module MC
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2019-12-10 17:05:10)
+Starting... (2019-12-10 16:53:55)
 @!@!@ENDMSG 2185 @!@!@
 @!@!@STARTMSG 2189:0 @!@!@
 Computing initial states...
 @!@!@ENDMSG 2189 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
-Finished computing initial states: 1 distinct state generated at 2019-12-10 17:05:16.
+Finished computing initial states: 1 distinct state generated at 2019-12-10 16:54:02.
 @!@!@ENDMSG 2190 @!@!@
 @!@!@STARTMSG 2114:1 @!@!@
 Deadlock reached.
@@ -114,7 +114,7 @@ The behavior up to this point is:
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2201:0 @!@!@
-The coverage statistics at 2019-12-10 17:05:16
+The coverage statistics at 2019-12-10 16:54:02
 @!@!@ENDMSG 2201 @!@!@
 @!@!@STARTMSG 2773:0 @!@!@
 <Init line 80, col 1 to line 80, col 4 of module payment>: 2:2
@@ -141,7 +141,7 @@ The coverage statistics at 2019-12-10 17:05:16
   line 92, col 12 to line 92, col 76 of module payment: 3
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<User line 96, col 1 to line 96, col 4 of module payment>: 5:9
+<User line 96, col 1 to line 96, col 4 of module payment>: 6:9
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 96, col 12 to line 96, col 30 of module payment: 29
@@ -204,7 +204,7 @@ The coverage statistics at 2019-12-10 17:05:16
   line 111, col 16 to line 111, col 60 of module payment: 4
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<GetNewCard line 113, col 1 to line 113, col 10 of module payment>: 2:4
+<GetNewCard line 113, col 1 to line 113, col 10 of module payment>: 3:4
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 113, col 18 to line 113, col 42 of module payment: 23
@@ -243,7 +243,7 @@ The coverage statistics at 2019-12-10 17:05:16
   line 123, col 26 to line 123, col 77 of module payment: 4
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<CheckTransaction line 127, col 1 to line 127, col 16 of module payment>: 4:5
+<CheckTransaction line 127, col 1 to line 127, col 16 of module payment>: 2:5
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 127, col 24 to line 127, col 60 of module payment: 22
@@ -276,7 +276,7 @@ The coverage statistics at 2019-12-10 17:05:16
 End of statistics.
 @!@!@ENDMSG 2202 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(8) at 2019-12-10 17:05:16: 22 states generated (166 s/min), 16 distinct states found (121 ds/min), 0 states left on queue.
+Progress(8) at 2019-12-10 16:54:02: 22 states generated (161 s/min), 16 distinct states found (117 ds/min), 0 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2199:0 @!@!@
 22 states generated, 16 distinct states found, 0 states left on queue.
@@ -288,5 +288,5 @@ The depth of the complete state graph search is 8.
 The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 2 and the 95th percentile is 2).
 @!@!@ENDMSG 2268 @!@!@
 @!@!@STARTMSG 2186:0 @!@!@
-Finished in 7936ms at (2019-12-10 17:05:16)
+Finished in 8183ms at (2019-12-10 16:54:02)
 @!@!@ENDMSG 2186 @!@!@

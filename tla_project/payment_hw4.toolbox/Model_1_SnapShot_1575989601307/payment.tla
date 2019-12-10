@@ -141,5 +141,5 @@ Spec == Init /\ [][Next]_vars
 
 =============================================================================
 \* Modification History
-\* Last modified Tue Dec 10 16:53:51 EET 2019 by enlik
+\* Last modified Tue Dec 10 16:52:57 EET 2019 by enlik
 \* Created Fri Dec 06 17:14:00 EET 2019 by enlik

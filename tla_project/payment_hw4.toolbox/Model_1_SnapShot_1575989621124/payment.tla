@@ -43,7 +43,7 @@ begin User:
     GetNewCard:
       card_is_valid := TRUE;
     RenewPaymentMethod:
-\*      await ~account_investigating;
+      await ~account_investigating;
       account_locked := FALSE;
       ghost_debt := 0;
   end either;
@@ -117,6 +117,7 @@ GetNewCard == /\ pc["user"] = "GetNewCard"
                               ghost_debt >>
 
 RenewPaymentMethod == /\ pc["user"] = "RenewPaymentMethod"
+                      /\ ~account_investigating
                       /\ account_locked' = FALSE
                       /\ ghost_debt' = 0
                       /\ pc' = [pc EXCEPT !["user"] = "User"]
@@ -141,5 +142,5 @@ Spec == Init /\ [][Next]_vars
 
 =============================================================================
 \* Modification History
-\* Last modified Tue Dec 10 16:53:51 EET 2019 by enlik
+\* Last modified Tue Dec 10 16:53:30 EET 2019 by enlik
 \* Created Fri Dec 06 17:14:00 EET 2019 by enlik
