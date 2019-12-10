@@ -1,0 +1,215 @@
+@!@!@STARTMSG 2262:0 @!@!@
+TLC2 Version 2.14 of 10 July 2019
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2187:0 @!@!@
+Running breadth-first search Model-Checking with fp 120 and seed 5253705940606061491 with 2 workers on 4 cores with 608MB heap and 1365MB offheap memory [pid: 2889] (Mac OS X 10.12.6 x86_64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+@!@!@ENDMSG 2187 @!@!@
+@!@!@STARTMSG 2220:0 @!@!@
+Starting SANY...
+@!@!@ENDMSG 2220 @!@!@
+Parsing file /Users/enlik/GitRepo/sm2019/tla_project/payment_hw4.toolbox/Model_1/MC.tla
+Parsing file /Users/enlik/GitRepo/sm2019/tla_project/payment_hw4.toolbox/Model_1/payment.tla
+Parsing file /Applications/TLA+ Toolbox-1.6.app/Contents/Eclipse/plugins/org.lamport.tlatools_1.0.0.201907102009/tla2sany/StandardModules/TLC.tla
+Parsing file /Applications/TLA+ Toolbox-1.6.app/Contents/Eclipse/plugins/org.lamport.tlatools_1.0.0.201907102009/tla2sany/StandardModules/Integers.tla
+Parsing file /Applications/TLA+ Toolbox-1.6.app/Contents/Eclipse/plugins/org.lamport.tlatools_1.0.0.201907102009/tla2sany/StandardModules/Naturals.tla
+Parsing file /Applications/TLA+ Toolbox-1.6.app/Contents/Eclipse/plugins/org.lamport.tlatools_1.0.0.201907102009/tla2sany/StandardModules/Sequences.tla
+Parsing file /Applications/TLA+ Toolbox-1.6.app/Contents/Eclipse/plugins/org.lamport.tlatools_1.0.0.201907102009/tla2sany/StandardModules/FiniteSets.tla
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module payment
+Semantic processing of module MC
+@!@!@STARTMSG 2219:0 @!@!@
+SANY finished.
+@!@!@ENDMSG 2219 @!@!@
+@!@!@STARTMSG 2185:0 @!@!@
+Starting... (2019-12-10 16:44:48)
+@!@!@ENDMSG 2185 @!@!@
+@!@!@STARTMSG 2189:0 @!@!@
+Computing initial states...
+@!@!@ENDMSG 2189 @!@!@
+@!@!@STARTMSG 2190:0 @!@!@
+Finished computing initial states: 1 distinct state generated at 2019-12-10 16:44:54.
+@!@!@ENDMSG 2190 @!@!@
+@!@!@STARTMSG 2193:0 @!@!@
+Model checking completed. No error has been found.
+  Estimates of the probability that TLC did not check all reachable states
+  because two distinct states had the same fingerprint:
+  calculated (optimistic):  val = 5.9E-18
+@!@!@ENDMSG 2193 @!@!@
+@!@!@STARTMSG 2201:0 @!@!@
+The coverage statistics at 2019-12-10 16:44:54
+@!@!@ENDMSG 2201 @!@!@
+@!@!@STARTMSG 2773:0 @!@!@
+<Init line 78, col 1 to line 78, col 4 of module payment>: 1:1
+@!@!@ENDMSG 2773 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 79, col 9 to line 85, col 85 of module payment: 1
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<Time line 87, col 1 to line 87, col 4 of module payment>: 1:2
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 87, col 12 to line 87, col 30 of module payment: 20
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 87, col 12 to line 87, col 21 of module payment: 18
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 88, col 12 to line 88, col 33 of module payment: 2
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 89, col 12 to line 89, col 47 of module payment: 2
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 90, col 12 to line 90, col 76 of module payment: 2
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<User line 94, col 1 to line 94, col 4 of module payment>: 6:7
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 94, col 12 to line 94, col 30 of module payment: 24
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 94, col 12 to line 94, col 21 of module payment: 18
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 70, col 20 to line 70, col 34 of module payment: 12
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 70, col 21 to line 70, col 34 of module payment: 8
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 70, col 39 to line 70, col 60 of module payment: 10
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 70, col 40 to line 70, col 60 of module payment: 6
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 96, col 18 to line 96, col 57 of module payment: 4
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 97, col 18 to line 97, col 31 of module payment: 11
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 97, col 19 to line 97, col 31 of module payment: 8
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 98, col 18 to line 98, col 59 of module payment: 3
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 99, col 12 to line 100, col 37 of module payment: 7
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<TakeRide line 102, col 1 to line 102, col 8 of module payment>: 1:4
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 102, col 16 to line 102, col 38 of module payment: 22
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 102, col 16 to line 102, col 25 of module payment: 18
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 103, col 19 to line 103, col 32 of module payment: 4
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 104, col 24 to line 105, col 54 of module payment: 1
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 106, col 27 to line 106, col 30 of module payment: 3
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 107, col 27 to line 107, col 75 of module payment: 3
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 108, col 16 to line 108, col 51 of module payment: 4
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 109, col 16 to line 109, col 60 of module payment: 4
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<GetNewCard line 111, col 1 to line 111, col 10 of module payment>: 2:3
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 111, col 18 to line 111, col 42 of module payment: 21
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 111, col 18 to line 111, col 27 of module payment: 18
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 112, col 18 to line 112, col 38 of module payment: 3
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 113, col 18 to line 113, col 67 of module payment: 3
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 114, col 18 to line 115, col 43 of module payment: 3
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<RenewPaymentMethod line 117, col 1 to line 117, col 18 of module payment>: 3:3
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 117, col 26 to line 117, col 58 of module payment: 21
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 117, col 26 to line 117, col 35 of module payment: 18
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 118, col 26 to line 118, col 48 of module payment: 3
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 119, col 26 to line 119, col 61 of module payment: 3
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 120, col 26 to line 121, col 51 of module payment: 3
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<CheckTransaction line 125, col 1 to line 125, col 16 of module payment>: 4:4
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 125, col 24 to line 125, col 60 of module payment: 22
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 125, col 24 to line 125, col 39 of module payment: 18
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 126, col 24 to line 126, col 44 of module payment: 4
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 127, col 24 to line 127, col 45 of module payment: 4
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 128, col 24 to line 128, col 53 of module payment: 4
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 129, col 24 to line 129, col 77 of module payment: 4
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 130, col 24 to line 130, col 64 of module payment: 4
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2774:0 @!@!@
+<LimitOutstandingDebt line 69, col 1 to line 69, col 20 of module payment>
+@!@!@ENDMSG 2774 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 69, col 25 to line 69, col 39 of module payment: 18
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2202:0 @!@!@
+End of statistics.
+@!@!@ENDMSG 2202 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(9) at 2019-12-10 16:44:54: 24 states generated (184 s/min), 18 distinct states found (138 ds/min), 0 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2199:0 @!@!@
+24 states generated, 18 distinct states found, 0 states left on queue.
+@!@!@ENDMSG 2199 @!@!@
+@!@!@STARTMSG 2194:0 @!@!@
+The depth of the complete state graph search is 9.
+@!@!@ENDMSG 2194 @!@!@
+@!@!@STARTMSG 2268:0 @!@!@
+The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 2 and the 95th percentile is 2).
+@!@!@ENDMSG 2268 @!@!@
+@!@!@STARTMSG 2186:0 @!@!@
+Finished in 7821ms at (2019-12-10 16:44:54)
+@!@!@ENDMSG 2186 @!@!@
