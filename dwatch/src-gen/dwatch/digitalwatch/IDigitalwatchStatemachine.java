@@ -41,11 +41,15 @@ public interface IDigitalwatchStatemachine extends ITimerCallback,IStatemachine 
 		
 		public void refreshChronoDisplay();
 		
+		public void refreshDateDisplay();
+		
 		public void setIndiglo();
 		
 		public void unsetIndiglo();
 		
 		public void hidePos(long pos);
+		
+		public void showPos(long pos);
 		
 	}
 	
@@ -66,6 +70,8 @@ public interface IDigitalwatchStatemachine extends ITimerCallback,IStatemachine 
 		public void resetChrono();
 		
 		public void increasePos(long pos);
+		
+		public void selectNextField();
 		
 	}
 	

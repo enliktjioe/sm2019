@@ -11,81 +11,65 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		private boolean topLeftPressed;
 		
 		
-		public void raiseTopLeftPressed() {
-			synchronized(DigitalwatchStatemachine.this) {
-				topLeftPressed = true;
-				runCycle();
-			}
+		public synchronized void raiseTopLeftPressed() {
+			topLeftPressed = true;
+			runCycle();
 		}
 		
 		private boolean topLeftReleased;
 		
 		
-		public void raiseTopLeftReleased() {
-			synchronized(DigitalwatchStatemachine.this) {
-				topLeftReleased = true;
-				runCycle();
-			}
+		public synchronized void raiseTopLeftReleased() {
+			topLeftReleased = true;
+			runCycle();
 		}
 		
 		private boolean topRightPressed;
 		
 		
-		public void raiseTopRightPressed() {
-			synchronized(DigitalwatchStatemachine.this) {
-				topRightPressed = true;
-				runCycle();
-			}
+		public synchronized void raiseTopRightPressed() {
+			topRightPressed = true;
+			runCycle();
 		}
 		
 		private boolean topRightReleased;
 		
 		
-		public void raiseTopRightReleased() {
-			synchronized(DigitalwatchStatemachine.this) {
-				topRightReleased = true;
-				runCycle();
-			}
+		public synchronized void raiseTopRightReleased() {
+			topRightReleased = true;
+			runCycle();
 		}
 		
 		private boolean botLeftPressed;
 		
 		
-		public void raiseBotLeftPressed() {
-			synchronized(DigitalwatchStatemachine.this) {
-				botLeftPressed = true;
-				runCycle();
-			}
+		public synchronized void raiseBotLeftPressed() {
+			botLeftPressed = true;
+			runCycle();
 		}
 		
 		private boolean botLeftReleased;
 		
 		
-		public void raiseBotLeftReleased() {
-			synchronized(DigitalwatchStatemachine.this) {
-				botLeftReleased = true;
-				runCycle();
-			}
+		public synchronized void raiseBotLeftReleased() {
+			botLeftReleased = true;
+			runCycle();
 		}
 		
 		private boolean botRightPressed;
 		
 		
-		public void raiseBotRightPressed() {
-			synchronized(DigitalwatchStatemachine.this) {
-				botRightPressed = true;
-				runCycle();
-			}
+		public synchronized void raiseBotRightPressed() {
+			botRightPressed = true;
+			runCycle();
 		}
 		
 		private boolean botRightReleased;
 		
 		
-		public void raiseBotRightReleased() {
-			synchronized(DigitalwatchStatemachine.this) {
-				botRightReleased = true;
-				runCycle();
-			}
+		public synchronized void raiseBotRightReleased() {
+			botRightReleased = true;
+			runCycle();
 		}
 		
 		protected void clearEvents() {
@@ -132,8 +116,18 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	private boolean initialized = false;
 	
 	public enum State {
-		main_region_Dead,
-		main_region_Alive,
+		main_region_Running_Watch_Mode,
+		main_region_Running_Watch_Mode_sub_region_Time_Display_Mode,
+		main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode,
+		main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle,
+		main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused,
+		main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running,
+		main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset,
+		main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode,
+		main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main,
+		main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection,
+		main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection,
+		main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button,
 		$NullState$
 	};
 	
@@ -143,20 +137,82 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	
 	private ITimer timer;
 	
-	private final boolean[] timeEvents = new boolean[2];
+	private final boolean[] timeEvents = new boolean[10];
 	
 	private long n;
 	
 	protected long getN() {
-		synchronized(DigitalwatchStatemachine.this) {
-			return n;
-		}
+		return n;
 	}
 	
 	protected void setN(long value) {
-		synchronized(DigitalwatchStatemachine.this) {
-			this.n = value;
-		}
+		this.n = value;
+	}
+	
+	
+	private boolean runChrono;
+	
+	protected boolean getRunChrono() {
+		return runChrono;
+	}
+	
+	protected void setRunChrono(boolean value) {
+		this.runChrono = value;
+	}
+	
+	
+	private boolean topRightPressed;
+	
+	protected boolean getTopRightPressed() {
+		return topRightPressed;
+	}
+	
+	protected void setTopRightPressed(boolean value) {
+		this.topRightPressed = value;
+	}
+	
+	
+	private long lightsOffCounter;
+	
+	protected long getLightsOffCounter() {
+		return lightsOffCounter;
+	}
+	
+	protected void setLightsOffCounter(long value) {
+		this.lightsOffCounter = value;
+	}
+	
+	
+	private boolean fieldSelectedVisible;
+	
+	protected boolean getFieldSelectedVisible() {
+		return fieldSelectedVisible;
+	}
+	
+	protected void setFieldSelectedVisible(boolean value) {
+		this.fieldSelectedVisible = value;
+	}
+	
+	
+	private long editTimeOver;
+	
+	protected long getEditTimeOver() {
+		return editTimeOver;
+	}
+	
+	protected void setEditTimeOver(long value) {
+		this.editTimeOver = value;
+	}
+	
+	
+	private boolean editTime;
+	
+	protected boolean getEditTime() {
+		return editTime;
+	}
+	
+	protected void setEditTime(boolean value) {
+		this.editTime = value;
 	}
 	
 	
@@ -185,6 +241,18 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		clearEvents();
 		clearOutEvents();
 		setN(0);
+		
+		setRunChrono(false);
+		
+		setTopRightPressed(false);
+		
+		setLightsOffCounter(2000);
+		
+		setFieldSelectedVisible(false);
+		
+		setEditTimeOver(5000);
+		
+		setEditTime(false);
 	}
 	
 	public synchronized void enter() {
@@ -206,11 +274,32 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		clearOutEvents();
 		for (nextStateIndex = 0; nextStateIndex < stateVector.length; nextStateIndex++) {
 			switch (stateVector[nextStateIndex]) {
-			case main_region_Dead:
-				main_region_Dead_react(true);
+			case main_region_Running_Watch_Mode_sub_region_Time_Display_Mode:
+				main_region_Running_Watch_Mode_sub_region_Time_Display_Mode_react(true);
 				break;
-			case main_region_Alive:
-				main_region_Alive_react(true);
+			case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle:
+				main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle_react(true);
+				break;
+			case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused:
+				main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused_react(true);
+				break;
+			case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running:
+				main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running_react(true);
+				break;
+			case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset:
+				main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset_react(true);
+				break;
+			case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main:
+				main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main_react(true);
+				break;
+			case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection:
+				main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection_react(true);
+				break;
+			case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection:
+				main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection_react(true);
+				break;
+			case main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button:
+				main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button_react(true);
 				break;
 			default:
 				// $NullState$
@@ -259,10 +348,33 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	public synchronized boolean isStateActive(State state) {
 	
 		switch (state) {
-		case main_region_Dead:
-			return stateVector[0] == State.main_region_Dead;
-		case main_region_Alive:
-			return stateVector[0] == State.main_region_Alive;
+		case main_region_Running_Watch_Mode:
+			return stateVector[0].ordinal() >= State.
+					main_region_Running_Watch_Mode.ordinal()&& stateVector[0].ordinal() <= State.main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button.ordinal();
+		case main_region_Running_Watch_Mode_sub_region_Time_Display_Mode:
+			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Time_Display_Mode;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode:
+			return stateVector[0].ordinal() >= State.
+					main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode.ordinal()&& stateVector[0].ordinal() <= State.main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset.ordinal();
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle:
+			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused:
+			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running:
+			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset:
+			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset;
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode:
+			return stateVector[0].ordinal() >= State.
+					main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode.ordinal()&& stateVector[0].ordinal() <= State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection.ordinal();
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main:
+			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main;
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection:
+			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection;
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection:
+			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection;
+		case main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button:
+			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button;
 		default:
 			return false;
 		}
@@ -305,50 +417,208 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		return sCILogicUnit;
 	}
 	
-	/* Entry action for state 'Dead'. */
-	private void entryAction_main_region_Dead() {
-		timer.setTimer(this, 0, 1000, false);
+	/* Entry action for state 'Running Watch Mode'. */
+	private void entryAction_main_region_Running_Watch_Mode() {
+		timer.setTimer(this, 0, (1 * 1000), true);
+		
+		timer.setTimer(this, 1, 10, true);
+		
+		timer.setTimer(this, 2, 1000, true);
+		
+		sCIDisplay.operationCallback.refreshDateDisplay();
+	}
+	
+	/* Entry action for state 'Time Display Mode'. */
+	private void entryAction_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode() {
+		timer.setTimer(this, 3, (1 * 1000), true);
 		
 		sCIDisplay.operationCallback.refreshTimeDisplay();
-		
-		sCIDisplay.operationCallback.unsetIndiglo();
 	}
 	
-	/* Entry action for state 'Alive'. */
-	private void entryAction_main_region_Alive() {
-		timer.setTimer(this, 1, 1000, false);
-		
-		sCIDisplay.operationCallback.setIndiglo();
-		
-		sCILogicUnit.operationCallback.increaseTimeByOne();
-		
-		sCIDisplay.operationCallback.hidePos(getN());
-		
-		setN((((n + 1)) % 6));
+	/* Entry action for state 'Chrono Display Mode'. */
+	private void entryAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode() {
+		timer.setTimer(this, 4, 1000, true);
 	}
 	
-	/* Exit action for state 'Dead'. */
-	private void exitAction_main_region_Dead() {
+	/* Entry action for state 'Paused'. */
+	private void entryAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused() {
+		setRunChrono(false);
+	}
+	
+	/* Entry action for state 'Running'. */
+	private void entryAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running() {
+		setRunChrono(true);
+	}
+	
+	/* Entry action for state 'Reset'. */
+	private void entryAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset() {
+		setRunChrono(false);
+		
+		sCILogicUnit.operationCallback.resetChrono();
+	}
+	
+	/* Entry action for state 'Time Edit Mode'. */
+	private void entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode() {
+		timer.setTimer(this, 5, (1 * 1000), true);
+		
+		setEditTime(true);
+		
+		setEditTimeOver(5);
+	}
+	
+	/* Entry action for state 'main'. */
+	private void entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main() {
+		timer.setTimer(this, 6, 250, true);
+		
+		timer.setTimer(this, 7, 500, true);
+		
+		setFieldSelectedVisible(true);
+		
+		sCIDisplay.operationCallback.showPos(1);
+	}
+	
+	/* Entry action for state 'changeSelection'. */
+	private void entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection() {
+		sCILogicUnit.operationCallback.selectNextField();
+	}
+	
+	/* Entry action for state 'increaseSelection'. */
+	private void entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection() {
+		timer.setTimer(this, 8, 250, true);
+		
+		setFieldSelectedVisible(true);
+		
+		sCIDisplay.operationCallback.showPos(1);
+		
+		sCILogicUnit.operationCallback.increasePos(1);
+	}
+	
+	/* Entry action for state 'Pressing botRight Button'. */
+	private void entryAction_main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button() {
+		timer.setTimer(this, 9, (1 * 1000), false);
+	}
+	
+	/* Exit action for state 'Running Watch Mode'. */
+	private void exitAction_main_region_Running_Watch_Mode() {
 		timer.unsetTimer(this, 0);
-	}
-	
-	/* Exit action for state 'Alive'. */
-	private void exitAction_main_region_Alive() {
+		
 		timer.unsetTimer(this, 1);
+		
+		timer.unsetTimer(this, 2);
 	}
 	
-	/* 'default' enter sequence for state Dead */
-	private void enterSequence_main_region_Dead_default() {
-		entryAction_main_region_Dead();
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_Dead;
+	/* Exit action for state 'Time Display Mode'. */
+	private void exitAction_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode() {
+		timer.unsetTimer(this, 3);
 	}
 	
-	/* 'default' enter sequence for state Alive */
-	private void enterSequence_main_region_Alive_default() {
-		entryAction_main_region_Alive();
+	/* Exit action for state 'Chrono Display Mode'. */
+	private void exitAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode() {
+		timer.unsetTimer(this, 4);
+	}
+	
+	/* Exit action for state 'Time Edit Mode'. */
+	private void exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode() {
+		timer.unsetTimer(this, 5);
+		
+		setEditTime(false);
+	}
+	
+	/* Exit action for state 'main'. */
+	private void exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main() {
+		timer.unsetTimer(this, 6);
+		
+		timer.unsetTimer(this, 7);
+	}
+	
+	/* Exit action for state 'increaseSelection'. */
+	private void exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection() {
+		timer.unsetTimer(this, 8);
+	}
+	
+	/* Exit action for state 'Pressing botRight Button'. */
+	private void exitAction_main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button() {
+		timer.unsetTimer(this, 9);
+	}
+	
+	/* 'default' enter sequence for state Running Watch Mode */
+	private void enterSequence_main_region_Running_Watch_Mode_default() {
+		entryAction_main_region_Running_Watch_Mode();
+		enterSequence_main_region_Running_Watch_Mode_sub_region_default();
+	}
+	
+	/* 'default' enter sequence for state Time Display Mode */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode_default() {
+		entryAction_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode();
 		nextStateIndex = 0;
-		stateVector[0] = State.main_region_Alive;
+		stateVector[0] = State.main_region_Running_Watch_Mode_sub_region_Time_Display_Mode;
+	}
+	
+	/* 'default' enter sequence for state Chrono Display Mode */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_default() {
+		entryAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode();
+		enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_default();
+	}
+	
+	/* 'default' enter sequence for state Idle */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle;
+	}
+	
+	/* 'default' enter sequence for state Paused */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused_default() {
+		entryAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused;
+	}
+	
+	/* 'default' enter sequence for state Running */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running_default() {
+		entryAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running;
+	}
+	
+	/* 'default' enter sequence for state Reset */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset_default() {
+		entryAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset;
+	}
+	
+	/* 'default' enter sequence for state Time Edit Mode */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_default() {
+		entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+		enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_default();
+	}
+	
+	/* 'default' enter sequence for state main */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main_default() {
+		entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main;
+	}
+	
+	/* 'default' enter sequence for state changeSelection */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection_default() {
+		entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection;
+	}
+	
+	/* 'default' enter sequence for state increaseSelection */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection_default() {
+		entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection;
+	}
+	
+	/* 'default' enter sequence for state Pressing botRight Button */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button_default() {
+		entryAction_main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button();
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button;
 	}
 	
 	/* 'default' enter sequence for region main region */
@@ -356,30 +626,219 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		react_main_region__entry_Default();
 	}
 	
-	/* Default exit sequence for state Dead */
-	private void exitSequence_main_region_Dead() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-		
-		exitAction_main_region_Dead();
+	/* 'default' enter sequence for region sub region */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_default() {
+		react_main_region_Running_Watch_Mode_sub_region__entry_Default();
 	}
 	
-	/* Default exit sequence for state Alive */
-	private void exitSequence_main_region_Alive() {
+	/* 'default' enter sequence for region Chrono Region */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_default() {
+		react_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region Time Edit Region */
+	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_default() {
+		react_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region__entry_Default();
+	}
+	
+	/* Default exit sequence for state Time Display Mode */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode() {
 		nextStateIndex = 0;
 		stateVector[0] = State.$NullState$;
 		
-		exitAction_main_region_Alive();
+		exitAction_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode();
+	}
+	
+	/* Default exit sequence for state Chrono Display Mode */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode() {
+		exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region();
+		exitAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode();
+	}
+	
+	/* Default exit sequence for state Idle */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Paused */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Running */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Reset */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Time Edit Mode */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode() {
+		exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region();
+		exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+	}
+	
+	/* Default exit sequence for state main */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
+	}
+	
+	/* Default exit sequence for state changeSelection */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state increaseSelection */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection();
+	}
+	
+	/* Default exit sequence for state Pressing botRight Button */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button();
 	}
 	
 	/* Default exit sequence for region main region */
 	private void exitSequence_main_region() {
 		switch (stateVector[0]) {
-		case main_region_Dead:
-			exitSequence_main_region_Dead();
+		case main_region_Running_Watch_Mode_sub_region_Time_Display_Mode:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode();
+			exitAction_main_region_Running_Watch_Mode();
 			break;
-		case main_region_Alive:
-			exitSequence_main_region_Alive();
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode();
+			exitAction_main_region_Running_Watch_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode();
+			exitAction_main_region_Running_Watch_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode();
+			exitAction_main_region_Running_Watch_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode();
+			exitAction_main_region_Running_Watch_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+			exitAction_main_region_Running_Watch_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+			exitAction_main_region_Running_Watch_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+			exitAction_main_region_Running_Watch_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button();
+			exitAction_main_region_Running_Watch_Mode();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region sub region */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region() {
+		switch (stateVector[0]) {
+		case main_region_Running_Watch_Mode_sub_region_Time_Display_Mode:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection();
+			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region Chrono Region */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region() {
+		switch (stateVector[0]) {
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region Time Edit Region */
+	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region() {
+		switch (stateVector[0]) {
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection();
+			break;
+		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection:
+			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection();
 			break;
 		default:
 			break;
@@ -388,21 +847,251 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	
 	/* Default react sequence for initial entry  */
 	private void react_main_region__entry_Default() {
-		enterSequence_main_region_Dead_default();
+		enterSequence_main_region_Running_Watch_Mode_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_Running_Watch_Mode_sub_region__entry_Default() {
+		enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region__entry_Default() {
+		enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region__entry_Default() {
+		enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main_default();
 	}
 	
 	private boolean react() {
 		return false;
 	}
 	
-	private boolean main_region_Dead_react(boolean try_transition) {
+	private boolean main_region_Running_Watch_Mode_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
 			if (react()==false) {
-				if (timeEvents[0]) {
-					exitSequence_main_region_Dead();
-					enterSequence_main_region_Alive_default();
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			if (timeEvents[0]) {
+				sCILogicUnit.operationCallback.increaseTimeByOne();
+				
+				sCIDisplay.operationCallback.refreshTimeDisplay();
+			}
+			if (((timeEvents[1]) && (getRunChrono()))) {
+				sCILogicUnit.operationCallback.increaseChronoByOne();
+			}
+			if (sCIButtons.topRightPressed) {
+				sCIDisplay.operationCallback.setIndiglo();
+				
+				setTopRightPressed(true);
+			}
+			if (sCIButtons.topRightReleased) {
+				setTopRightPressed(false);
+				
+				setLightsOffCounter(2000);
+			}
+			if (((timeEvents[2]) && (getLightsOffCounter()>0))) {
+				setLightsOffCounter(getLightsOffCounter() - 1000);
+			}
+			if (getLightsOffCounter()==0) {
+				sCIDisplay.operationCallback.unsetIndiglo();
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Running_Watch_Mode_sub_region_Time_Display_Mode_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (main_region_Running_Watch_Mode_react(try_transition)==false) {
+				if (sCIButtons.topLeftPressed) {
+					exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode();
+					enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_default();
+				} else {
+					if (sCIButtons.botRightPressed) {
+						exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode();
+						enterSequence_main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button_default();
+					} else {
+						did_transition = false;
+					}
+				}
+			}
+		}
+		if (did_transition==false) {
+			if (timeEvents[3]) {
+				sCIDisplay.operationCallback.refreshTimeDisplay();
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (main_region_Running_Watch_Mode_react(try_transition)==false) {
+				if (sCIButtons.topLeftPressed) {
+					exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode();
+					enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode_default();
+				} else {
+					did_transition = false;
+				}
+			}
+		}
+		if (did_transition==false) {
+			if (timeEvents[4]) {
+				sCIDisplay.operationCallback.refreshChronoDisplay();
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_react(try_transition)==false) {
+				if (sCIButtons.botRightPressed) {
+					exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle();
+					enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running_default();
+				} else {
+					if (getRunChrono()) {
+						exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle();
+						enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running_default();
+					} else {
+						if (sCIButtons.botLeftPressed) {
+							exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle();
+							enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset_default();
+						} else {
+							did_transition = false;
+						}
+					}
+				}
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_react(try_transition)==false) {
+				exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused();
+				enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle_default();
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_react(try_transition)==false) {
+				if (sCIButtons.botRightPressed) {
+					exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running();
+					enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused_default();
+				} else {
+					if (sCIButtons.botLeftPressed) {
+						exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running();
+						enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset_default();
+					} else {
+						did_transition = false;
+					}
+				}
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_react(try_transition)==false) {
+				exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset();
+				enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle_default();
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (main_region_Running_Watch_Mode_react(try_transition)==false) {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			if (sCIButtons.botLeftReleased) {
+				setEditTimeOver(5);
+			}
+			if (sCIButtons.botRightReleased) {
+				setEditTimeOver(5);
+			}
+			if (((timeEvents[5]) && (getEditTimeOver()>0))) {
+				setEditTimeOver(getEditTimeOver() - 1);
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_react(try_transition)==false) {
+				if (sCIButtons.botRightPressed) {
+					exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
+					enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection_default();
+				} else {
+					if (sCIButtons.botLeftPressed) {
+						exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
+						enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection_default();
+					} else {
+						if (getEditTimeOver()==0) {
+							exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+							enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode_default();
+						} else {
+							did_transition = false;
+						}
+					}
+				}
+			}
+		}
+		if (did_transition==false) {
+			if (((timeEvents[6]) && (getFieldSelectedVisible()))) {
+				sCIDisplay.operationCallback.hidePos(1);
+				
+				setFieldSelectedVisible(false);
+			}
+			if (((timeEvents[7]) && (!getFieldSelectedVisible()))) {
+				setFieldSelectedVisible(true);
+				
+				sCIDisplay.operationCallback.showPos(1);
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_react(try_transition)==false) {
+				if (sCIButtons.botRightReleased) {
+					exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection();
+					enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main_default();
 				} else {
 					did_transition = false;
 				}
@@ -411,16 +1100,47 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		return did_transition;
 	}
 	
-	private boolean main_region_Alive_react(boolean try_transition) {
+	private boolean main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (react()==false) {
-				if (timeEvents[1]) {
-					exitSequence_main_region_Alive();
-					enterSequence_main_region_Dead_default();
+			if (main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_react(try_transition)==false) {
+				if (sCIButtons.botLeftReleased) {
+					exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection();
+					enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main_default();
 				} else {
-					did_transition = false;
+					if (getEditTimeOver()==0) {
+						exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+						enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode_default();
+					} else {
+						did_transition = false;
+					}
+				}
+			}
+		}
+		if (did_transition==false) {
+			if (timeEvents[8]) {
+				sCILogicUnit.operationCallback.increasePos(1);
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (main_region_Running_Watch_Mode_react(try_transition)==false) {
+				if (timeEvents[9]) {
+					exitSequence_main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button();
+					enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_default();
+				} else {
+					if (sCIButtons.botRightReleased) {
+						exitSequence_main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button();
+						enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode_default();
+					} else {
+						did_transition = false;
+					}
 				}
 			}
 		}
