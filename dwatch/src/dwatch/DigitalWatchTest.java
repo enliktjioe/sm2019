@@ -320,22 +320,4 @@ class DigitalWatchTest extends DigitalWatchTestFixture {
 			assertTimeFlashing(1, 10);
 		}
 	}
-
-	@Override
-	public void refreshDateDisplay() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void showPos(long pos) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void selectNextField() {
-		// TODO Auto-generated method stub
-		
-	}
 }

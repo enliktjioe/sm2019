@@ -34,12 +34,9 @@ public class DigitalWatchViewImpl implements SCIDisplayOperationCallback {
 
 	private SCIButtons listener;
 	private DigitalWatchController model;
-	private DigitalwatchStatemachine sm;
-
 	public DigitalWatchViewImpl(DigitalWatchController model, SCIButtons listener, DigitalwatchStatemachine sm) {
 		this.model = model;
 		this.listener = listener;
-		this.sm = sm;
 		initializeGUI();
 	}
 
@@ -155,17 +152,5 @@ public class DigitalWatchViewImpl implements SCIDisplayOperationCallback {
 		});
 
 		return button;
-	}
-
-	@Override
-	public void refreshDateDisplay() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void showPos(long pos) {
-		// TODO Auto-generated method stub
-		
 	}
 }

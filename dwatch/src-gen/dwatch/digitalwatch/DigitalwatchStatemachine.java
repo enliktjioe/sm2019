@@ -141,7 +141,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset,
 		main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode,
 		main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main,
-		main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection,
 		main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection,
 		main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button,
 		$NullState$
@@ -336,9 +335,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 			case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main:
 				main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main_react(true);
 				break;
-			case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection:
-				main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection_react(true);
-				break;
 			case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection:
 				main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection_react(true);
 				break;
@@ -413,8 +409,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 					main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode.ordinal()&& stateVector[0].ordinal() <= State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection.ordinal();
 		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main:
 			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main;
-		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection:
-			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection;
 		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection:
 			return stateVector[0] == State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection;
 		case main_region_Running_Watch_Mode_sub_region_Pressing_botRight_Button:
@@ -468,8 +462,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		timer.setTimer(this, 1, 10, true);
 		
 		timer.setTimer(this, 2, 1000, true);
-		
-		sCIDisplay.operationCallback.refreshDateDisplay();
 	}
 	
 	/* Entry action for state 'Time Display Mode'. */
@@ -517,13 +509,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		timer.setTimer(this, 7, 500, true);
 		
 		setFieldSelectedVisible(true);
-		
-		sCIDisplay.operationCallback.showPos(1);
-	}
-	
-	/* Entry action for state 'changeSelection'. */
-	private void entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection() {
-		sCILogicUnit.operationCallback.selectNextField();
 	}
 	
 	/* Entry action for state 'increaseSelection'. */
@@ -531,8 +516,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		timer.setTimer(this, 8, 250, true);
 		
 		setFieldSelectedVisible(true);
-		
-		sCIDisplay.operationCallback.showPos(1);
 		
 		sCILogicUnit.operationCallback.increasePos(1);
 	}
@@ -644,13 +627,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		stateVector[0] = State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main;
 	}
 	
-	/* 'default' enter sequence for state changeSelection */
-	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection_default() {
-		entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection();
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection;
-	}
-	
 	/* 'default' enter sequence for state increaseSelection */
 	private void enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection_default() {
 		entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection();
@@ -737,12 +713,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
 	}
 	
-	/* Default exit sequence for state changeSelection */
-	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-	}
-	
 	/* Default exit sequence for state increaseSelection */
 	private void exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection() {
 		nextStateIndex = 0;
@@ -791,11 +761,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
 			exitAction_main_region_Running_Watch_Mode();
 			break;
-		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection:
-			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection();
-			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
-			exitAction_main_region_Running_Watch_Mode();
-			break;
 		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection:
 			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection();
 			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
@@ -836,10 +801,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
 			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
 			break;
-		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection:
-			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection();
-			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
-			break;
 		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection:
 			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection();
 			exitAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
@@ -877,9 +838,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		switch (stateVector[0]) {
 		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main:
 			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
-			break;
-		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection:
-			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection();
 			break;
 		case main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection:
 			exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection();
@@ -1095,20 +1053,15 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		
 		if (try_transition) {
 			if (main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_react(try_transition)==false) {
-				if (sCIButtons.botRightPressed) {
+				if (sCIButtons.botLeftPressed) {
 					exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
-					enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection_default();
+					enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection_default();
 				} else {
-					if (sCIButtons.botLeftPressed) {
-						exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main();
-						enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection_default();
+					if (getEditTimeOver()==0) {
+						exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+						enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode_default();
 					} else {
-						if (getEditTimeOver()==0) {
-							exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
-							enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode_default();
-						} else {
-							did_transition = false;
-						}
+						did_transition = false;
 					}
 				}
 			}
@@ -1121,24 +1074,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 			}
 			if (((timeEvents[7]) && (!getFieldSelectedVisible()))) {
 				setFieldSelectedVisible(true);
-				
-				sCIDisplay.operationCallback.showPos(1);
-			}
-		}
-		return did_transition;
-	}
-	
-	private boolean main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection_react(boolean try_transition) {
-		boolean did_transition = try_transition;
-		
-		if (try_transition) {
-			if (main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_react(try_transition)==false) {
-				if (sCIButtons.botRightReleased) {
-					exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection();
-					enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main_default();
-				} else {
-					did_transition = false;
-				}
 			}
 		}
 		return did_transition;
