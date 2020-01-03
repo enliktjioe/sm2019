@@ -156,4 +156,16 @@ public class DigitalWatchViewImpl implements SCIDisplayOperationCallback {
 
 		return button;
 	}
+
+	@Override
+	public void refreshDateDisplay() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showPos(long pos) {
+		// TODO Auto-generated method stub
+		
+	}
 }

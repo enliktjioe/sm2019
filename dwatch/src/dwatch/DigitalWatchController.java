@@ -162,4 +162,10 @@ public class DigitalWatchController implements SCILogicUnitOperationCallback {
 
 	}
 
+	@Override
+	public void selectNextField() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

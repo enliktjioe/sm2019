@@ -11,65 +11,81 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		private boolean topLeftPressed;
 		
 		
-		public synchronized void raiseTopLeftPressed() {
-			topLeftPressed = true;
-			runCycle();
+		public void raiseTopLeftPressed() {
+			synchronized(DigitalwatchStatemachine.this) {
+				topLeftPressed = true;
+				runCycle();
+			}
 		}
 		
 		private boolean topLeftReleased;
 		
 		
-		public synchronized void raiseTopLeftReleased() {
-			topLeftReleased = true;
-			runCycle();
+		public void raiseTopLeftReleased() {
+			synchronized(DigitalwatchStatemachine.this) {
+				topLeftReleased = true;
+				runCycle();
+			}
 		}
 		
 		private boolean topRightPressed;
 		
 		
-		public synchronized void raiseTopRightPressed() {
-			topRightPressed = true;
-			runCycle();
+		public void raiseTopRightPressed() {
+			synchronized(DigitalwatchStatemachine.this) {
+				topRightPressed = true;
+				runCycle();
+			}
 		}
 		
 		private boolean topRightReleased;
 		
 		
-		public synchronized void raiseTopRightReleased() {
-			topRightReleased = true;
-			runCycle();
+		public void raiseTopRightReleased() {
+			synchronized(DigitalwatchStatemachine.this) {
+				topRightReleased = true;
+				runCycle();
+			}
 		}
 		
 		private boolean botLeftPressed;
 		
 		
-		public synchronized void raiseBotLeftPressed() {
-			botLeftPressed = true;
-			runCycle();
+		public void raiseBotLeftPressed() {
+			synchronized(DigitalwatchStatemachine.this) {
+				botLeftPressed = true;
+				runCycle();
+			}
 		}
 		
 		private boolean botLeftReleased;
 		
 		
-		public synchronized void raiseBotLeftReleased() {
-			botLeftReleased = true;
-			runCycle();
+		public void raiseBotLeftReleased() {
+			synchronized(DigitalwatchStatemachine.this) {
+				botLeftReleased = true;
+				runCycle();
+			}
 		}
 		
 		private boolean botRightPressed;
 		
 		
-		public synchronized void raiseBotRightPressed() {
-			botRightPressed = true;
-			runCycle();
+		public void raiseBotRightPressed() {
+			synchronized(DigitalwatchStatemachine.this) {
+				botRightPressed = true;
+				runCycle();
+			}
 		}
 		
 		private boolean botRightReleased;
 		
 		
-		public synchronized void raiseBotRightReleased() {
-			botRightReleased = true;
-			runCycle();
+		public void raiseBotRightReleased() {
+			synchronized(DigitalwatchStatemachine.this) {
+				botRightReleased = true;
+				runCycle();
+			}
 		}
 		
 		protected void clearEvents() {
@@ -142,77 +158,105 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	private long n;
 	
 	protected long getN() {
-		return n;
+		synchronized(DigitalwatchStatemachine.this) {
+			return n;
+		}
 	}
 	
 	protected void setN(long value) {
-		this.n = value;
+		synchronized(DigitalwatchStatemachine.this) {
+			this.n = value;
+		}
 	}
 	
 	
 	private boolean runChrono;
 	
 	protected boolean getRunChrono() {
-		return runChrono;
+		synchronized(DigitalwatchStatemachine.this) {
+			return runChrono;
+		}
 	}
 	
 	protected void setRunChrono(boolean value) {
-		this.runChrono = value;
+		synchronized(DigitalwatchStatemachine.this) {
+			this.runChrono = value;
+		}
 	}
 	
 	
 	private boolean topRightPressed;
 	
 	protected boolean getTopRightPressed() {
-		return topRightPressed;
+		synchronized(DigitalwatchStatemachine.this) {
+			return topRightPressed;
+		}
 	}
 	
 	protected void setTopRightPressed(boolean value) {
-		this.topRightPressed = value;
+		synchronized(DigitalwatchStatemachine.this) {
+			this.topRightPressed = value;
+		}
 	}
 	
 	
 	private long lightsOffCounter;
 	
 	protected long getLightsOffCounter() {
-		return lightsOffCounter;
+		synchronized(DigitalwatchStatemachine.this) {
+			return lightsOffCounter;
+		}
 	}
 	
 	protected void setLightsOffCounter(long value) {
-		this.lightsOffCounter = value;
+		synchronized(DigitalwatchStatemachine.this) {
+			this.lightsOffCounter = value;
+		}
 	}
 	
 	
 	private boolean fieldSelectedVisible;
 	
 	protected boolean getFieldSelectedVisible() {
-		return fieldSelectedVisible;
+		synchronized(DigitalwatchStatemachine.this) {
+			return fieldSelectedVisible;
+		}
 	}
 	
 	protected void setFieldSelectedVisible(boolean value) {
-		this.fieldSelectedVisible = value;
+		synchronized(DigitalwatchStatemachine.this) {
+			this.fieldSelectedVisible = value;
+		}
 	}
 	
 	
 	private long editTimeOver;
 	
 	protected long getEditTimeOver() {
-		return editTimeOver;
+		synchronized(DigitalwatchStatemachine.this) {
+			return editTimeOver;
+		}
 	}
 	
 	protected void setEditTimeOver(long value) {
-		this.editTimeOver = value;
+		synchronized(DigitalwatchStatemachine.this) {
+			this.editTimeOver = value;
+		}
 	}
 	
 	
 	private boolean editTime;
 	
 	protected boolean getEditTime() {
-		return editTime;
+		synchronized(DigitalwatchStatemachine.this) {
+			return editTime;
+		}
 	}
 	
 	protected void setEditTime(boolean value) {
-		this.editTime = value;
+		synchronized(DigitalwatchStatemachine.this) {
+			this.editTime = value;
+		}
 	}
 	
 	
