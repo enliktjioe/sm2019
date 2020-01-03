@@ -898,7 +898,7 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 				
 				setLightsOffCounter(2000);
 			}
-			if (((timeEvents[2]) && (getLightsOffCounter()>0))) {
+			if (((timeEvents[2]) && ((getLightsOffCounter()>0 && getTopRightPressed()==false)))) {
 				setLightsOffCounter(getLightsOffCounter() - 1000);
 			}
 			if (getLightsOffCounter()==0) {
