@@ -1174,7 +1174,12 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 					exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_changeSelection();
 					enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_main_default();
 				} else {
-					did_transition = false;
+					if (getEditTimeOver()==0) {
+						exitSequence_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode();
+						enterSequence_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode_default();
+					} else {
+						did_transition = false;
+					}
 				}
 			}
 		}
