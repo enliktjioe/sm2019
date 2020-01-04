@@ -154,21 +154,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	
 	private final boolean[] timeEvents = new boolean[10];
 	
-	private long n;
-	
-	protected long getN() {
-		synchronized(DigitalwatchStatemachine.this) {
-			return n;
-		}
-	}
-	
-	protected void setN(long value) {
-		synchronized(DigitalwatchStatemachine.this) {
-			this.n = value;
-		}
-	}
-	
-	
 	private boolean runChrono;
 	
 	protected boolean getRunChrono() {
@@ -283,8 +268,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		}
 		clearEvents();
 		clearOutEvents();
-		setN(0);
-		
 		setRunChrono(false);
 		
 		setTopRightPressed(false);
@@ -459,21 +442,23 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	private void entryAction_main_region_Running_Watch_Mode() {
 		timer.setTimer(this, 0, (1 * 1000), true);
 		
-		timer.setTimer(this, 1, 10, true);
-		
-		timer.setTimer(this, 2, 1000, true);
+		timer.setTimer(this, 1, 1000, true);
 	}
 	
 	/* Entry action for state 'Time Display Mode'. */
 	private void entryAction_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode() {
-		timer.setTimer(this, 3, (1 * 1000), true);
+		timer.setTimer(this, 2, (1 * 1000), true);
+		
+		timer.setTimer(this, 3, 10, true);
 		
 		sCIDisplay.operationCallback.refreshTimeDisplay();
 	}
 	
 	/* Entry action for state 'Chrono Display Mode'. */
 	private void entryAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode() {
-		timer.setTimer(this, 4, 1000, true);
+		timer.setTimer(this, 4, 10, true);
+		
+		sCIDisplay.operationCallback.refreshChronoDisplay();
 	}
 	
 	/* Entry action for state 'Paused'. */
@@ -488,9 +473,9 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	
 	/* Entry action for state 'Reset'. */
 	private void entryAction_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset() {
-		setRunChrono(false);
-		
 		sCILogicUnit.operationCallback.resetChrono();
+		
+		sCIDisplay.operationCallback.refreshChronoDisplay();
 	}
 	
 	/* Entry action for state 'Time Edit Mode'. */
@@ -530,12 +515,12 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		timer.unsetTimer(this, 0);
 		
 		timer.unsetTimer(this, 1);
-		
-		timer.unsetTimer(this, 2);
 	}
 	
 	/* Exit action for state 'Time Display Mode'. */
 	private void exitAction_main_region_Running_Watch_Mode_sub_region_Time_Display_Mode() {
+		timer.unsetTimer(this, 2);
+		
 		timer.unsetTimer(this, 3);
 	}
 	
@@ -885,9 +870,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 				
 				sCIDisplay.operationCallback.refreshTimeDisplay();
 			}
-			if (((timeEvents[1]) && (getRunChrono()))) {
-				sCILogicUnit.operationCallback.increaseChronoByOne();
-			}
 			if (sCIButtons.topRightPressed) {
 				sCIDisplay.operationCallback.setIndiglo();
 				
@@ -898,7 +880,7 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 				
 				setLightsOffCounter(2000);
 			}
-			if (((timeEvents[2]) && ((getLightsOffCounter()>0 && getTopRightPressed()==false)))) {
+			if (((timeEvents[1]) && ((getLightsOffCounter()>0 && getTopRightPressed()==false)))) {
 				setLightsOffCounter(getLightsOffCounter() - 1000);
 			}
 			if (getLightsOffCounter()==0) {
@@ -927,8 +909,13 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 			}
 		}
 		if (did_transition==false) {
-			if (timeEvents[3]) {
+			if (timeEvents[2]) {
 				sCIDisplay.operationCallback.refreshTimeDisplay();
+			}
+			if (((timeEvents[3]) && (getRunChrono()))) {
+				sCILogicUnit.operationCallback.increaseChronoByOne();
+				
+				sCIDisplay.operationCallback.refreshChronoDisplay();
 			}
 		}
 		return did_transition;
@@ -948,7 +935,9 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 			}
 		}
 		if (did_transition==false) {
-			if (timeEvents[4]) {
+			if (((timeEvents[4]) && (getRunChrono()))) {
+				sCILogicUnit.operationCallback.increaseChronoByOne();
+				
 				sCIDisplay.operationCallback.refreshChronoDisplay();
 			}
 		}
@@ -986,8 +975,17 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		
 		if (try_transition) {
 			if (main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_react(try_transition)==false) {
-				exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused();
-				enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Idle_default();
+				if (sCIButtons.botRightPressed) {
+					exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused();
+					enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Running_default();
+				} else {
+					if (sCIButtons.botLeftPressed) {
+						exitSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Paused();
+						enterSequence_main_region_Running_Watch_Mode_sub_region_Chrono_Display_Mode_Chrono_Region_Reset_default();
+					} else {
+						did_transition = false;
+					}
+				}
 			}
 		}
 		return did_transition;
