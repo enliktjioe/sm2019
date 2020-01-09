@@ -2,3 +2,10 @@
 *.class
 
 .metadata/
+exam_practice/lamp/src-gen/
+
+exam_practice/lamp/.settings/
+
+exam_practice/lamp/.classpath
+
+exam_practice/lamp/.project

@@ -1,0 +1,16 @@
+GeneratorModel for yakindu::java {
+
+	statechart lamp {
+
+		feature Outlet {
+			targetProject = "lamp"
+			targetFolder = "src-gen"
+			libraryTargetFolder = "src"
+		}
+		
+		feature GeneralFeatures { 
+			RuntimeService = true 
+			TimerService = true
+		}
+	}
+}
