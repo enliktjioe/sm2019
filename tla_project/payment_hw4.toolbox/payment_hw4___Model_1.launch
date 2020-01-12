@@ -18,6 +18,7 @@
         <listEntry value="1LimitOutstandingDebt"/>
     </listAttribute>
     <listAttribute key="modelCorrectnessProperties"/>
+    <intAttribute key="modelEditorOpenTabs" value="2"/>
     <stringAttribute key="modelExpressionEval" value=""/>
     <listAttribute key="modelParameterConstants"/>
     <intAttribute key="numberOfWorkers" value="2"/>
