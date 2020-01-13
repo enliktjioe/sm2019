@@ -245,21 +245,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 	}
 	
 	
-	private boolean fieldSelectedVisible;
-	
-	protected boolean getFieldSelectedVisible() {
-		synchronized(DigitalwatchStatemachine.this) {
-			return fieldSelectedVisible;
-		}
-	}
-	
-	protected void setFieldSelectedVisible(boolean value) {
-		synchronized(DigitalwatchStatemachine.this) {
-			this.fieldSelectedVisible = value;
-		}
-	}
-	
-	
 	public DigitalwatchStatemachine() {
 		sCIButtons = new SCIButtonsImpl();
 		sCIDisplay = new SCIDisplayImpl();
@@ -295,8 +280,6 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		setEditTimeOver(5000);
 		
 		setEditTime(false);
-		
-		setFieldSelectedVisible(true);
 	}
 	
 	public synchronized void enter() {
@@ -517,15 +500,11 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 		timer.setTimer(this, 6, 250, true);
 		
 		timer.setTimer(this, 7, 500, true);
-		
-		setFieldSelectedVisible(true);
 	}
 	
 	/* Entry action for state 'increaseSelection'. */
 	private void entryAction_main_region_Running_Watch_Mode_sub_region_Time_Edit_Mode_Time_Edit_Region_increaseSelection() {
 		timer.setTimer(this, 8, 250, true);
-		
-		setFieldSelectedVisible(true);
 		
 		sCILogicUnit.operationCallback.increasePos(getN());
 	}
@@ -1125,15 +1104,11 @@ public class DigitalwatchStatemachine implements IDigitalwatchStatemachine {
 			}
 		}
 		if (did_transition==false) {
-			if (((timeEvents[6]) && (getFieldSelectedVisible()))) {
+			if (timeEvents[6]) {
 				sCIDisplay.operationCallback.hidePos(getN());
-				
-				setFieldSelectedVisible(false);
 			}
-			if (((timeEvents[7]) && (!getFieldSelectedVisible()))) {
+			if (timeEvents[7]) {
 				sCIDisplay.operationCallback.refreshTimeDisplay();
-				
-				setFieldSelectedVisible(true);
 			}
 		}
 		return did_transition;
